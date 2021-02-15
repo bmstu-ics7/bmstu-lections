@@ -1,0 +1,4732 @@
+\documentclass[a4paper, 14pt]{report}
+
+\usepackage{cmap}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage[left=30mm, top=20mm, right=20mm, bottom=20mm, nohead, nofoot]{geometry}
+\usepackage{indentfirst}
+
+\usepackage{amsmath}
+\usepackage{MnSymbol}
+\usepackage{wasysym}
+
+\usepackage{amsthm}
+\usepackage{mdframed}
+
+\usepackage[unicode, pdftex]{hyperref}
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.9}
+
+\usepackage{float}
+
+\newmdtheoremenv{theorem}{Теорема}[section]
+\newtheorem{lemma}{Лемма}[section]
+\newtheorem{defenition}{Определение}[section]
+\newtheorem{note}{Замечание}[section]
+\newtheorem{cont}{Следствие}[section]
+\newtheorem{example}{Пример}[section]
+
+\author{Власов Павел Александрович}
+\title{Теория вероятностей}
+\date{2019}
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+\clearpage
+
+\chapter{Интегралы}
+
+\section{Двойной интеграл}
+
+\subsection{Площадь плоской фигуры}
+
+Пусть $D$ - фигура на плоскости.
+
+Как ввести понятие площади фигуры $D$?
+
+Если $D$ является треугольником (или прямоугольником) понятие площади очевидно.
+
+Если $D$ является многоугольником, то ее можно разбить на треугольники, а площадь области $D$ определить как сумму состовляющих ее треугольников.
+
+Что делать если $D$ - произвольная фигура
+
+\begin{enumerate}
+
+    \item[а)] Рассмотрим множество многоугольников $M$, каждый из которых целиком содержится в $D$.
+
+    Обозначим $S_* = \text{sup}\ S(m)$, где $m$ - многоугольники, $S(m)$ - площадь многоугольника
+
+    \item[б)] Рассмотрим множество многоугольников $M$, каждый из которых содержит в себе $D$.
+
+    Обозначим $S^* = \text{suf}\ S(M)$
+
+\end{enumerate}
+
+\begin{defenition}
+    Область $D$ на плоскости называется \textbf{квадрируемой}, если $\exists$ конечные значения $S_*$, $S^*$ причем $S_* = S^*$. При этом число $S = S_* = S^*$ называется \textbf{площадью области $D$}
+\end{defenition}
+
+\hfill
+
+\begin{defenition}
+    Говорят, что множество $D$ точек плоскости имеет площадь \textbf{нуль}, если $D$ можно целиком заключить в многоугольник, сколь угодной площади, т.е. $\forall \varepsilon > 0\ \exists$ многоугольник $M$ площади $\varepsilon$ такой, что $D \le M$
+\end{defenition}
+
+\hfill
+
+\textbf{Пример:}
+\begin{enumerate}
+    \item[1)] $D = \{ A \}$, $A$ - точка
+    \item[2)] $D = \{ AB \}$, $AB$ - отрезок
+    \item[3)] Спрямленная (с конечной длиной) кривая
+\end{enumerate}
+
+\begin{theorem}
+    Пусть $D$ - замкнутая плоская область. Тогда $D$ - квадрируемая граница области $\Delta$. $\Leftrightarrow$ имеет площадь 0. $\blacksquare$
+\end{theorem}
+
+\hfill
+
+\begin{theorem}
+    Пусть $\alpha$ - плоская спрямленная кривая. Тогда $\alpha$ - имеет площадь нуль. $\blacksquare$
+\end{theorem}
+
+\hfill
+
+\underline{Следствие} Пусть 1) $D$ - область на плоскости, 2) $D$ ограничена конечным числом cпрямленных кривых. Тогда $D$ - квадрируема.
+
+\hfill
+
+\begin{note}
+    В дальнейшем мы будем рассматривать только квадрируемые области
+\end{note}
+
+\subsection{Задачи, приводящие к понятию двойного интеграла}
+
+\begin{enumerate}
+    \item[I.] \textbf{Задача об объеме цилиндрического тела}
+
+    Пусть $D$ - область плоскости $Oxy$
+
+    $f$: $D \to R$ - функция определенная на множестве $D$
+
+    $$f(x, y) \geq 0\ \ \ (x, y) \in D$$
+
+    Рассмотрим тело $T$, которое ограничено плоскостью $Oxy$, графиком функции $z = f(x,y)$ и цилиндрической поверхностью, направляющая которой совпадает с гранью $D$, а образующие параллельны $Oz$
+
+        \begin{enumerate}
+        \item[1)] Разобьем область $D$ на пересекающиеся части
+
+        $$ D = \overset{n}{\underset{i = 1}{U}} D_i $$
+
+        $$ \text{int } D_i \cap \text{int } D_j = \emptyset, \text{ при } i \ne j\ (*)$$
+
+        $$ \text{int } D_j - \text{множество внутренних точек области } D_i $$
+
+        Условие (*) означает, что различные элементы разбиения не имеют общих внутренних точек
+
+        \item[2)] Выберем точку $M_i \in D_i$ $i = \overline{1;n}$
+
+        \item[3)] Считая, что размеры подобласти $D_i$ малы, примем $\Delta V_i \approx f(M_i) \Delta S_i$, где $\Delta S_i = S(D_i)$, $\Delta V_i$ - объем той части тела $T$, которая рассматривается под $D_i$
+        \end{enumerate}
+
+    \textbf{Тогда объем тела $T$:}
+    
+    $$ V = \sum_{i=1}^n \Delta V_i \approx \sum_{i=1}^n f(M_i) \Delta S_i $$
+    
+    Эта формула тем точнее, чем меньше размеры $D_i$, поэтому естественно перейти к пределу
+    
+    $$ V = \lim_{\underset{i = \overline{1,n}}{\text{max diam}}(D_i) \to 0} \sum_{i=1}^n f(M_i) \Delta S_i,$$
+    
+    $$\text{diam} (D) = \underset{M,N \in D}{\text{sup}} || \overline{MN} || - \text{диаметр множества } D$$
+    
+    \item[II.] \textbf{Задача о вычислении массы пластины}
+    
+    Пусть: 
+    
+    \begin{enumerate}
+        \item[1)] Пластина занимает область $D$ на плоскости
+        \item[2)] $f(x,y) \geq 0$ - плоскость поверхности материала пластины в точке $M(x,y)$
+    \end{enumerate}
+    
+    Нужно найти массу $m$ этой частички
+\end{enumerate}
+
+\begin{enumerate}
+    \item[1)] Разобьем область $D$ на непересекающей части
+    
+    $$ D = \overset{n}{\underset{i=1}{U}} D_i $$
+    
+    $$ \text{int } D_i \cap \text{int } D_j = \emptyset, i \ne j $$
+    
+    \item[2)] В пределах $D_i$ выберем точку $M_i, i = \overline{1,n}$
+    \item[3)] Считая, что размеры $D_i$ малы, можно принять, что в пределах каждой из оластей $D_i$ плотность пластины меняется незначительно, поэтому во всех точках области $D_i$ плотность $\approx f(M_i)$ 
+
+    Тогда масса части $D_i:\ \Delta m_i \approx f(M_i) \Delta S_i$, где $\Delta S_i = S(D_i),\ i = \overline{1, m}$
+
+    \item[4)] \textbf{Тогда масса всей пластины}
+    
+    $$ m = \sum_{i=1}^n \Delta m_i \approx \sum_{i=1}^n f(M_i) \Delta S_i $$
+
+\end{enumerate}
+
+Полученная формула тем точнее, чем меньше размеры $D_i$, поэтому собственно
+
+$$ m = \lim_{\underset{i = \overline{1,n}}{\text{max diam}} (D_i) \to 0} \sum_{i=1}^n f(M_i) \Delta S_i $$
+
+\subsection{Определение свойства двойного интеграла}
+
+Пусть $D$ - квадратичная замкнутая плоская область
+
+\begin{defenition}
+    \textbf{Разбиение области $D$} называется множество $R = \{ D_1, ... D_n\}$, где 
+
+\begin{enumerate}
+    \item[1)] $D = \underset{i=1}{\overset{n}{U}} D_i$
+    \item[2)] $\text{int } D_i \cap \text{int } D_j = \emptyset$, при $i \ne j$
+    \item[3)] $D_i$ - квадрируема, $i = \overline{1,n}$
+\end{enumerate}
+\end{defenition}
+
+\begin{defenition}
+\textbf{Диаметром разбиения} $R = \{ D_1, ... D_n \}$ называется число 
+
+$$d(R) = \underset{i = \overline{1,n}}{\text{max diam}} (D_i)$$
+
+\end{defenition}
+
+Пусть $D$ - квадратичная замкнутая область на плоскости $Oxy$, $f: D \to R$ ($f$ является функцией двух переменных, т.к. $D$ - область на плоскости)
+
+\begin{defenition}
+    \textbf{Двойным интегралом функции $f$ по области $D$} называется число 
+
+$$ \iint_D f(x,y) dx dy = \lim_{d(R) \to 0} \sum f(n_i) \Delta S_i, \text{ где}$$
+
+$$ R = \{D_1,...D_n\} \text{ - разбиение области } D $$
+$$ M_i \in D_i,\ i = \overline{1,n} \text{ - отмеченные точки} $$
+$$ \Delta S_i = S(D_i) $$
+\end{defenition}
+
+\begin{defenition}
+    В определении подразумевается, что указанный предел существует, конечен и не зависит от разбиения $R$ области $D$ и способа выбора отмеченных точек
+\end{defenition}
+
+\begin{defenition}
+    Функции $f$, для которых существует $\iint_\Delta f dx dy$, называются \textbf{интегрируемыми в $D$}
+\end{defenition}
+
+\hfill
+
+\textbf{Свойства двойного интеграла:}
+
+\begin{enumerate}
+    \item[1)] $\iint_D 1 dxdy = S(D)$
+    \item[2)] Линейность 
+    
+    Если $f,g$ - интегрируемы в $D$ функции, то 
+    
+    \begin{enumerate}
+        \item[а)] $f \pm g$ интегрируема в $D$, $\iint_D (f \pm g) dxdy = \iint_D fdxdy \pm \iint_D g dxdy$
+        \item[б)] $c \cdot f, c = \text{const}$ - интегрируема, $\iint_D c \cdot f dxdy = c \iint_D f dxdy$
+    \end{enumerate}
+    
+    \item[3)] Аддитивность
+    
+    Пусть
+    
+    \begin{enumerate}
+        \item[1.] $D_1,D_2$ - плоские квадратичные области
+        \item[2.] $f$ интегрируема в $D_1$ и $D_2$
+        \item[3.] $\text{int } D_1 \cap \text{int } D_2 = \emptyset$
+    \end{enumerate}
+    
+    Тогда $f$ интегрируема в $D= D_1 \cup D_2$
+    
+    $$ \iint_D f dxdy = \iint_{D_1} f dxdy + \iint_{D_2} f dxdy $$
+    
+    \item[4)] О сохранении интегралом знака функции
+    
+    Пусть
+    
+    \begin{enumerate}
+        \item[1.] $F(x,y) \geq 0$ в $D$
+        \item[2.] $f$ - интегрируема в $D$
+    \end{enumerate}
+    
+    тогда 
+    
+    $$ \iint_D F(x,y) dxdy \geq 0 $$
+    
+    \item[5)] Пусть
+    
+        \begin{enumerate}
+        \item[1.] $ f(x,y) \geq g(x,y) $
+        \item[2.] $ f,g $ - интегрируемы в $D$
+    \end{enumerate}
+    
+    тогда
+    
+    $$ \iint_D f dxdy \geq \iint_D g dxdy $$
+    
+    \item[6)] Теорема об оценке модуля двойного интеграла
+    
+    Пусть $f$ интегрируема в $D$, тогда $|f|$ - интегрируем в $D$
+    
+    $$ |\iint_D f dxdy| \le \iint_D |f| dxdy $$
+    
+    \item[7)] Теорема об оценке двойного интеграла (обобщенная теорема)
+    
+    Пусть 
+    
+    \begin{enumerate}
+        \item[1.] $f,g$ - интегрируемы в $D$
+        \item[2.] $m \le f(x,y) \le M$
+        \item[3.] $g(x,y) \geq 0$
+    \end{enumerate}
+    
+    тогда
+    
+    $$ m \iint_D g(x,y) dxdy \le \iint_D f(x,y) dxdy \le M \iint_D g(x,y) dxdy $$
+    
+    \underline{Следствие} Если $g(x,y) \equiv 1$ в $D$, то получаем "просто" теорема об оценке двойного интеграла
+    
+    $$ m \cdot S \le \iint_D f(x,y) dxdy \le M \cdot S, \text{ где} S = S(D)$$
+    
+    
+    \item[8)] Теорема о среднем значении
+    
+        \begin{defenition}
+            \textbf{Средним значением функции $f$ в плоскости $D$} называется
+        \end{defenition}
+    
+    $$ <f> = {1 \over S(D)} \iint_D f(x,y) dxdy $$
+    
+    \underline{Свойство} Пусть 
+    
+    \begin{enumerate}
+        \item[1.] $D$ - линейно связная замкнутая область (т.е. граница $D$ является связным множеством)
+        \item[2.] $f$ - непрерывна в $D$
+    \end{enumerate}
+    
+    Тогда существует $M_0 \in D$, такая что $f(M_0) = <f>$
+    
+    \item[9)] Обобщенная теорема о среднем значении
+    
+    Пусть
+    
+    \begin{enumerate}
+        \item[1.] $f$ - непрерывна в $D$
+        \item[2.] $g$ - интегрируема в $D$
+        \item[3.] $g$ - знакопостоянна
+        \item[4.] $D$ - линейно связанной множество (если $f$ - непрерывна в $D$, то $f$ - интегрируема в $D$)
+    \end{enumerate}
+    
+    тогда существует $M_0 \in D$ такая, что 
+    
+    $$ \iint_d f(x,y)g(x,y) dxdy = f(M_0) \iint_d g(x,y) dxdy $$
+    
+\end{enumerate}
+
+\underline{Замечание} Свойство (8) является частным случаем свойства (9) для $g(x,y) = 1$
+
+\subsection{Повторный интеграл}
+
+\begin{defenition} 
+    Повторным интегралом называется выражение $ \int_a^b dx \int_{\varphi_1(x)}^{\varphi_2(x)} f(x,y) dy $, значение $I_\text{повт}$ которого определяется правилом $ I_\text{повт} = \int_a^b F(x) dx $, где $F(x) = \int_{\varphi_1(x)}^{\varphi_2(x)} f(x,y) dy$, $x \in [a,b], x = \text{const}$
+\end{defenition}
+
+Вычислить 
+$$
+I_\text{повт} = \int_1^{\ln(2)} dx \int_1^{1 \over x} x e^{xy} dy
+$$
+
+$$
+\text{a)} F(x) = \int_1^{1 \over x} xe^{xy} dy = e^{xy} | _{y = 1}^{y = \frac{1}{x}} = e - e^x
+$$
+
+$$
+\text{б)} I_\text{повт} = \int_1^{\ln(2)} F(x) dx = \int_1^{\ln(2)} (e - e^x)dx = e(\ln(2) - 1) - e^x |_1^{\ln(2)} = e \ln(2) - 2
+$$
+
+\subsection{Вычисление двойного интеграла}
+
+\begin{defenition}
+    Область $D$ на плоскости $Oxy$ называется $y$ - прав., если любая прямая, параллельная $Oy$, пересекает границу $D$ не более, чем в двух точках, либо содержит участок границы области $D$ целиком
+\end{defenition}
+
+\begin{note}
+    \begin{enumerate}
+        \item $y$-прав. можно задать в следующем виде:
+        $$
+            D = \{ (x,y) : a \le x \le b, \varphi_1(x) \le y \le \varphi)2(x) \}
+        $$
+
+    \item $x$ - прав. определеяется аналогично
+    \end{enumerate}
+\end{note}
+
+\begin{theorem}
+    Пусть 
+
+    \begin{enumerate}
+        \item $\exists \iint_D f(x,y) dxdy = I$
+        \item $D$ является $y$-прав. и задается соотношением (*)
+        \item $\forall x \in [a;b] \exists \int_{\varphi_1(x)}^{\varphi_2(x)} f(x,y) dy = F(x)$
+    \end{enumerate}
+
+    Тогда 
+
+    \begin{enumerate}
+        \item $\exists$ повторный интеграл
+
+            $$
+            \int^b_a \int_{\varphi_1(x)}^{\varphi_2(x)} f(x,y) = I_\text{повт}
+            $$
+
+        \item $I = I_\text{повт}$
+    \end{enumerate}
+\end{theorem}
+
+\begin{note}
+    Если область $D$ не является правильной в направлении какой-нибудь из координатных осей, то ее можно разбить на правильные части и воспользоваться свойством аддитивности двойного интеграла
+\end{note}
+
+\subsection{Замена переменных в двойном интеграле}
+
+Пусть 
+
+\begin{enumerate}
+    \item $I = \iint _{D_{xy}} f(x,y) dxdy$
+    \item $\varphi : D_{uv} \to D_{xy}$
+
+        $$
+        \varphi : \begin{cases}
+            x = x(u,v) \\
+            y = y(u,v)
+        \end{cases}
+        $$
+\end{enumerate}
+
+\begin{theorem}
+    О замене переменных в двойном инетеграле
+
+    Пусть
+
+    \begin{enumerate}
+        \item $D_{xy} = \varphi(D_{uv})$
+        \item $\varphi$ биективно
+        \item $\varphi$ непрерывна и непрерывано дифф. в $D_{uv}$
+        \item $I_\varphi \ne 0$ в $D_{uv}$, где 
+            $$
+                I_\varphi = \left| \begin{matrix} x'_u & x'_v \\ y'_u & y'_v \end{matrix} \right|
+            $$
+        \item $f$ - интегрируема в $D_{xy}$
+    \end{enumerate}
+    
+    Тогда
+
+    \begin{enumerate}
+        \item $f(x(u,v), y(u,v)) |I_\varphi (u,v)|$ - истина в $D_{uv}$
+        \item $\iint_{D_{xy}} f(x,y) dxdy = \iint_{D_{uv}} f(x(u,v), y(y,v)) \cdot |I_\varphi (u,v)| dudv$
+    \end{enumerate}
+\end{theorem}
+
+\begin{note}
+    \begin{enumerate}
+        \item Теорема остается справедливой и в том случае, если условия 2,3,4 нарушаются в отдельных точках области $D_{uv}$ или вдоль отдельных кривых, лежащих в $D_{uv}$ и имеющих площадь нуль
+    \end{enumerate}
+\end{note}
+
+\subsection{Приложения двойного инетграла}
+
+\begin{enumerate}
+    \item[I.] \textbf{Вычисление площади плоской фигуры}
+
+    $$
+        S(D) = \iint_D 1 dx dy
+    $$
+
+    \item[II.] \textbf{Вычисление массы пластины}
+
+        Пусть 
+        \begin{enumerate}
+            \item[1)] Пластина занимает обалсть $D$ на плоскости $Oxy$
+            \item[2)] $f(x,y)$ - значение плотности материала пластины
+        \end{enumerate}
+
+        Тогда масса пластины
+
+        $$
+        M = \iint_D f(x,y) dxdy
+        $$
+
+    \item[III.] \textbf{Вычисление оъема тела}
+
+        Пусть
+
+        \begin{enumerate}
+            \item[1)] Тело $T$: $T = \{ (x,y,z): (x,y) \in D_{xy}, z_1(x,y) \le z \le z_2(x,y) \}$
+        \end{enumerate}
+
+        Тогда объем тела $T$ можно найти по формуле
+
+        $$
+        V(T) = \iint_{D_{xy}} \big[ z_2(x,y) - z_1(x,y) \big] dxdy
+        $$
+
+\end{enumerate}
+
+\section{Тройной интеграл}
+
+\subsection{Понятие кубируемой области}
+
+Рассмотрим область $G \subseteq R^3$
+
+Как ввести понятие объема тела, которое занимает эту область? Понятие объема легко ввести для параллелепипеда или, более общо, многогранника в $R^3$. Что делать, если $G \subseteq R^3$ - произвольная область?
+
+\begin{enumerate}
+    \item Рассмотрим множество многогранников $q$, целиком содеожащихся в $G$, и обозначим 
+
+        $$
+        V_* = \underset{q}{\text{sup}} V(q)
+        $$
+
+    \item Рассмотрим множество многогранников $Q$, целико содержащих в себе $G$, и обозначим 
+
+        $$
+        V^* = \underset{Q}{inf} V(Q)
+        $$
+\end{enumerate}
+
+\begin{defenition}
+    Трехмерная область $G$ называется кубируемой, если $\exists$ конечные значения $V_*, V^*$, причем $V_* = V^*$. При этом значение $V = V_* = V^*$ называется бъемом области $G$
+\end{defenition}
+
+\begin{defenition}
+    Говорят, что множество точек в $R^3$ имеет объем нуль, если все точки этого множества можно заключить в многогранник сколь угодно малого объема.
+\end{defenition}
+
+\subsection{Задача о вычислении массы тела}
+
+Пусть 
+
+\begin{enumerate}
+    \item Тело $T$ занимает область $G \subset R^3$
+    \item $f(x,y,z) \geq 0$ - значение плотности материала этого тела в точке $(x,y,z)$
+\end{enumerate}
+
+Требуется: Найти массу $m(T)$ тела $T$
+
+\begin{enumerate}
+    \item Разобьем область $G$ на части:
+
+        $$
+        G = U_{i=1}^{n} G_i,\ \text{int }G_i \cap \text{int } G_j = 0, \text{ при } i \ne j
+        $$
+
+    \item В пределах кажддой из подобластей выберем отмеченную точку $M_i \in G_i,\ i = \overline{1;n}$
+
+    \item Считая, что размеры $G_i$ малы:
+
+        $$
+        \Delta m_i = m(G_i) \approx f(M_i) \Delta V_i, \text{ где } \Delta V_i = V(G_i)
+        $$
+
+        масса тела, занимающего подобласть $G_i$
+
+    \item Масса тела $T$ тогда:
+
+        $$
+        m(T) = \sum_{i=1}^n \Delta m_i \approx \sum_{i=1}^n f(M_i) \Delta V_i
+        $$
+
+    \item Эта формула тем точнее, чем меньше размеры $G_i$, поэтому естественно перейти к пределу:
+
+        $$
+        m(T) = \underset{ \underset{i}{\text{max}}\text{ diam} \to 0 }{\lim} \sum_{i=1}^n f(M_i) \Delta V_i
+        $$
+\end{enumerate}
+
+\subsection{Определение тройного интеграла}
+
+Пусть 
+
+\begin{enumerate}
+    \item $G \subseteq R^3$ - тело
+    \item $f:G \to R$ - функция
+\end{enumerate}
+
+Разоьем область $G$ на части так, как это было сделано в задаче о вычислении массы тела
+
+Обозначим: $R = \{G_1,...,G_n\}$ - разбиение тела $G$
+
+\begin{defenition}
+    Диаметром разбиения $R$ тела $G$ называется число
+
+    $$
+    d(R) = \underset{i = \overline{1;n}}{\text{max diam }} G_i
+    $$
+\end{defenition}
+
+\begin{defenition}
+    Тройным интегралом по функции $f(x,y,z)$ по области $G$ называется число 
+
+    $$
+    \iiint_G f(x,y,z) dxdydz = \lim_{d(R) \to 0} \sum_{i=1}^n f(M_i) \Delta V_i
+    $$
+
+    , где $M_i, \Delta V_i$ имееют тот же смысл, что и в задаче о вычислении массы тела
+\end{defenition}
+
+\begin{note}
+    Если указанный в определении тройного интеграла предел $\exists$ и конечен, то функция $f$ называется интегрируемой в области 
+\end{note}
+
+\subsubsection{Свойства тройного интеграла}
+
+Эти свойства полностью аналогичны свойствам 1 - 9 двойного интеграла; при их записи нужно вместо $f(x,y) \mapsto f(x,y,z)$, $\iint_D f(x,y) dxdy \mapsto \iiint_G f(x,y,z) dxdydz$ $D \mapsto G$.
+
+\subsection{Вычисление тройного интеграла}
+
+Основная идея - сведение к повторному интегралу
+
+\begin{defenition}
+    Область $G \subseteq R^3$ называется z-правильной, если любая прямая, параллельная $Oz$, пересекает границу $G$ не более чем в двух точках или содержит участок границы целиком.
+\end{defenition}
+
+z-правильная область $G$ можно задать в виде:
+
+$$
+G = \{ (x,y,z) : (x,y) \in D_{xy}, z_1(x,y) \le z \le Z_2(x,y) \}
+$$
+
+\begin{theorem}
+    Пусть
+
+    \begin{enumerate}
+        \item $\exists \iiint_G f(x,y,z) dxdydz$
+        \item $G$ является z-прав и задается (*)
+        \item Для каждой фиксированной точки $(x,y) \in D_{xy}$
+    \end{enumerate}
+
+    $$
+    \exists \int_{z_1(x,y)}^{z_2(x,y)} f(x,y,z) dz = F(x,y)
+    $$
+
+    Тогда 
+
+    \begin{enumerate}
+        \item $\exists$ повторный интеграл
+
+            $$
+            I_\text{повт} = \iint_{D_{xy}} F(x,y) dxdy = \iint_{D_{xy}} dxdy \int_{z_1(x,y)}^{z_2(x,y)} f(x,y,z) dz
+            $$
+
+        \item и $I_\text{повт} = I$
+    \end{enumerate}
+\end{theorem}
+
+\begin{note}
+    Если в условии * сформулированной теоремы область $D_{xy}$ является y-правильной и задается в виде:
+
+    $$
+    D_{xy} = \{ (x,y): a \le x \le b, \varphi_1(x) \le y \le \varphi_2(x) \}
+    $$
+
+    то
+
+    $$
+    \iiint_G f(x,y,z) dxdyd = \int_a^bdx \int_{\varphi_1(x)}^{\varphi_2(x)} dy \int_{z_1(x,y)}^{z_2(x,y)} f(x,y,z) dz
+    $$
+\end{note}
+
+\subsection{Замена переменных в тройном итеграле}
+
+\begin{theorem}
+    Пусть
+
+    \begin{enumerate}
+        \item $G_{xyz} = \varphi(G_{uv\omega})$
+        \item $\varphi: G_{uv\omega} \to G_{xyz}$
+
+            $$
+            \varphi : 
+            \begin{cases}
+                x = x(u, v, \omega) \\
+                y = y(u, v, \omega) \\
+                z = z(u, v, \omega) \\
+            \end{cases}
+            $$
+
+        \item Отображение $\varphi$ биективно
+        \item $\varphi$ непрерывно и непрырывно дифференцируемо в $G_{uv\omega}$
+        \item 
+            $$
+            J_\varphi(u,v,\omega) = \left|
+            \begin{matrix}
+                x'_u & x'_v & x'_\omega \\
+                y'_u & y'_v & y'_\omega \\
+                z'_u & z'_v & z'_\omega \\
+            \end{matrix}
+            \right| \ne 0
+            $$
+        \item $f(x,y,z)$ интегрируема в $G_{xyz}$
+    \end{enumerate}
+
+    Тогда
+
+    $$
+    \iiint_{G_{xyz}} f(x,y,z)dxdydz = \iiint_{G_{uv\omega}} f(x(u,v,\omega), y(u,v,\omega), z(u,v,\omega)) |J_\varphi(u,v,\omega)| dudvd\omega
+    $$
+\end{theorem}
+
+\subsubsection{Связь цилиндрической и декартовой СК}
+
+$$
+\begin{cases}
+    x = \rho \cos(\varphi) \\
+    y = \rho \sin(\varphi) \\
+    z = z \\
+\end{cases}
+$$
+
+$$
+J_\text{цил} = \left|
+\begin{matrix}
+    \cos(\varphi) & -\rho \sin(\varphi) & 0 \\
+    \sin(\varphi) & \rho \cos(\varphi) & 0 \\
+    0 & 0 & 1
+\end{matrix}
+\right| = \rho
+$$
+
+\subsubsection{Связь сферической и декартовой СК}
+
+$$
+\begin{cases}
+    x = r \cos(\Theta) \cos(\varphi) \\
+    y = r \cos(\Theta) \sin(\varphi) \\
+    z = r \sin(\Theta) \\
+\end{cases}
+$$
+
+$$
+|J_\text{сф}| = \dots = r^2 \cos(\Theta)
+$$
+
+\chapter{Теория вероятности}
+
+\section{Определения вероятности}
+
+\subsection{Случайный эксперимент}
+
+\begin{defenition}
+    Случайным называется эксперимент, результат которого невозможно предсказать.
+\end{defenition}
+
+\begin{enumerate}
+    \item Подброс монетки
+
+        $$
+        \Omega = \{ \text{Г}, \text{Р}\}
+        $$
+
+        $$
+        |\Omega| = 2
+        $$
+
+    \item Бросают игральную кость
+
+        $$
+        \Omega = \{ 1, 2, 3, 4, 5, 6 \}
+        $$
+
+        $$
+        |\Omega| = 6
+        $$
+
+    \item Бросают монету до первого появления герба
+
+        $$
+        \Omega = \{ 1, 2, 3, \dots \}
+        $$
+
+        $$
+        |\Omega| = \aleph_0
+        $$
+
+        Омега является счетным множеством, т.е. в нем столько же элементов, сколько существует натуральных чисел.
+
+    \item Производят стрельбу по плоской мишени размеры которой 1м x 1м (координаты - точки попадания)
+
+        $$
+        \Omega = \{ (x,y) : |x| \le \frac{1}{2}; |y| \le \frac{1}{2} \}
+        $$
+
+        $$
+        |\Omega| = c
+        $$
+
+        Омега имеет можность континуума
+\end{enumerate}
+
+\begin{defenition}
+    Множество $\Omega$ всех исходов данного случайного эксперимента называется пространством элементарных исходов
+\end{defenition}
+
+\begin{note}
+    При рассматривании пространства элементарных исходов предполагается, что
+    \begin{enumerate}
+        \item Каждый элементарный исход неделим, т.е. не может быть "разложен" на более мелкие исходы
+        \item В результате случайного эксперимента всегда происходит ровно один элементарный исход из $\Omega$
+    \end{enumerate}
+\end{note}
+
+\begin{defenition}
+    (Нестрогое) Событием называется (любое) подмножество множества $\Omega$
+\end{defenition}
+
+\begin{defenition}
+    Говорят, что в результате случайного эксперимента происходит событие $A$, если в результате этого эксперимента произошел один из входящих в $A$ элементарных исходов.
+\end{defenition}
+
+Бросают игральную кость
+
+$$
+\Omega = \{ 1,2,3,4,5,6 \}
+$$
+
+$$
+A = \{2,4,6\}
+$$
+
+Если выпало 2 очко, то наступило $A$
+
+\begin{defenition}
+    Событие $A$ называется следствием события $B$, если наступление события $B$ влечет наступление события $A$, т.е. $B \subseteq A$
+\end{defenition}
+
+\begin{note}
+    Любое множество $\Omega$ содержит в качестве подмножеств $\emptyset$ и $\Omega$ соответствующие события называются невозможным ($\emptyset$) и достоверным ($\Omega$). Оба этих события называют несобственными. Все остальные события называют собственными.
+\end{note}
+
+В урне находится 2 красных и 3 синих шара. Из урны извлекают 1 шар
+
+$$
+A = \{ \text{извлеченный шар - зеленый} \} = \emptyset
+$$
+
+$$
+B = \{ \text{извлеченный шар - красный или синий} \} = \Omega
+$$
+
+\subsection{Операции над событиями}
+
+События - множества (подмножества множества $\Omega$) $\Rightarrow$ $\cup, \cap, \overline{a}, \backslash, \Delta$ 
+
+\begin{defenition}
+    Суммой событий $A,B \subseteq \Omega$ называют событие
+
+    $$
+    A + B = A \cup B
+    $$
+\end{defenition}
+
+\begin{defenition}
+    Произведением событий $A,B \subseteq \Omega$ называют событие
+
+    $$
+    A \cdot B = A \cap B
+    $$
+\end{defenition}
+
+\begin{defenition}
+    $A \backslash B$ называется разностью событий $A$ и $B$
+\end{defenition}
+
+\begin{defenition}
+    $\overline{A}$ называется событием, противоположным $A$
+\end{defenition}
+
+\subsubsection{Свойства операций над событиями}
+
+Смотреть теоретико-множеств. тождества (осно.)
+
+\begin{defenition}
+    События $A,B \in \Omega$ называются несовместными, если $AB = \emptyset$. В противоположном случае события $A$ и $B$ называются совместными.
+\end{defenition}
+
+\begin{defenition}
+    События $A_1, \dots, A_n, \dots$ называются попарнонесовместимимы, если $A_i A_j = \emptyset, i \ne j$ - несовместимыми в совокупности $A_1 \cdot \dots \cdot A_n = \emptyset$
+\end{defenition}
+
+\subsection{Классическое определение вероятности}
+
+Пусть
+
+\begin{enumerate}
+    \item $|\Omega| = N < \infty$
+    \item по условиям сложности эксперимента нет оснований предпочесть тот или иной исход остальных (в этом случае говорят, что все элементы исхода равновозможны)
+    \item $A \subseteq \Omega,\ |A| = N_A$
+\end{enumerate}
+
+\begin{defenition}
+    Вероятностью осуществления события $A$ называют число
+
+    $$
+    P\{A\} = \frac{N_A}{N}
+    $$
+\end{defenition}
+
+2 раза бросают игральную кость
+
+$$
+A = \{ \text{сумма выпавших очков} \}
+$$
+
+$$
+P(A) = ?
+$$
+
+Решение:
+
+Исход: $(x_1, x_2)$, где $x_i$ - количество выпавших при $i$-м броске
+
+$$
+\Omega = \{ (1,1), (1,2), \dots, (6,6) \}
+$$
+
+$$
+|\Omega| = 36 = N
+$$
+
+$$
+A = \{ (5,6), (6,5), (6,6) \}
+$$
+
+$$
+N_A = |A| = 3 \\
+$$
+
+$$
+P(A) = \frac{N_A}{N} = \frac{3}{36} = \frac{1}{12}
+$$
+
+\subsubsection{Свойства вероятности (в соответствии с классическим определением)}
+
+\begin{enumerate}
+    \item $P(A) \geq 0$
+    \item $P(\Omega) = 1$
+    \item Если $AB = \emptyset$, то $P(A+B) = P(A) + P(B)$
+\end{enumerate}
+
+\begin{proof}
+    \begin{enumerate}
+        \item $P(A) = \frac{N_A}{N} \geq 0$
+        \item $P(\Omega) = \frac{N_\Omega}{N} = \frac{N}{N} = 1$
+        \item $|A+B|=|A|+|B|-|AB|$ (формула включений и исключений). 
+            
+            По условию $|AB|=0 \Rightarrow N_{A+B} = N_A + N_B$
+
+            $$
+            P(A) = \frac{N_{A+B}}{N} = \frac{N_A + N_B}{N} = \frac{N_A+N_B}{N}=\frac{N_A}{N} + \frac{N_B}{N} = P(A) + P(B)
+            $$
+    \end{enumerate}
+\end{proof}
+
+\begin{note}
+    Недостатки классического определения вероятности:
+
+    \begin{enumerate}
+        \item Неприменимо в случае, когда $|\Omega| = \infty$
+        \item Неприменимо, если вектор исхода является "более возможным", чем другие
+    \end{enumerate}
+\end{note}
+
+\subsection{Геометрическое определение вероятности}
+
+является обобщением классического определения на случай бесконечного $\Omega$, когда $\Omega \subseteq R^n$
+
+Пусть
+
+\begin{enumerate}
+    \item $\Omega \subseteq R^n$
+    \item $\mu(\Omega) < \infty$, где $\mu$ - мера множества ($n=1$ - длина, $n=2$ - площадь)
+    \item Возможность принадлежности исхода эксперимента некоторого события пропорциональна мере этого события и не зависит от его (события) формы и расположения внутри $\Omega$.
+\end{enumerate}
+
+\begin{defenition}
+    Вероятностью осуществления события $A$ называется число
+
+    $$
+    P\{A\} = \frac{\mu(A)}{\mu(\Omega)}
+    $$
+\end{defenition}
+
+Задача о встрече
+
+Два человека договорились встретиться в условленном месте в промежутке от 12 до 14 часов. При этом если один из них придет раньше другого, то он ждет 15 минут, после чего уходит. Какова вероятность того, что они встретятся, если появления каждого из них равновероятно в любой момент между 12 и 13 часами?
+
+Решение
+
+\begin{enumerate}
+    \item Исход
+
+        $$
+        (x_1,x_2)
+        $$
+
+        где $x_i \in [0,1], i = 1,2$ - появление i-го человека после 12 часов
+
+        $$
+        \Omega = \{ (x_1,x_2) : x_i \in [0;1]\} = [0;1] \times [0;1]
+        $$
+
+    \item $A = \{\text{эти два человека встретились}\}$
+
+        $$
+        A = \{ (x_1,x_2) : |x_1-x_2| \le \frac{1}{4}\}
+        $$
+
+    \item В соотвествии с геометрическим определением
+
+        $$
+        P(A) = \frac{\mu(A)}{\mu(\Omega)} = \frac{\mu(\Omega) - 2 \mu(\Delta)}{\mu(\Omega)} = 1 - 2 \frac{1}{2} (\frac{3}{4})^2 = 1 - \frac{9}{16} = \frac{7}{16}
+        $$
+\end{enumerate}
+
+\begin{note}
+    \begin{enumerate}
+        \item Очевидно, что из геометрического определения следуют те же свойства вероятности, что и из классического определения
+        \item Недостатком геометрического определения является то, что оно не учитывает возможность того, что некоторые области внутри $\Omega$ могут быть более предпочтительными, чем другие области той же меры. Например, если в разобранном примере появление каждого из этих двух человек было более вероятным в середине часа, то геометрическое определение дало бы неудовлетворительный результат.
+    \end{enumerate}
+\end{note}
+
+\subsection{Статистическое определение вероятности}
+
+Пусть 
+
+\begin{enumerate}
+    \item $\Omega$ пространство элементарных исходов случайного эксперимента
+    \item $A \subseteq \Omega$ - событие, связанное с этим экспериментом
+    \item Этот случайный эксперимент произведен $n$ раз, при этом событие $A$ произошло $n_A$ раз
+\end{enumerate}
+
+\begin{defenition}
+    Вероятностью события $A$ называется эмпирический (то есть из опыта) предел:
+
+    $$
+    P(A) = \lim_{n \to \infty} \frac{n_A}{n}
+    $$
+\end{defenition}
+
+\begin{note}
+    \begin{enumerate}
+        \item Из статистического определения можно поучить те же свойства вероятности, что и из двух предыдущих определений
+        \item Недостатки статистического определения
+
+            \begin{itemize}
+                \item Никакой эксперимент невозможно осуществить бесконечное чтсло раз
+                \item С точки зрения современной математики это определение является архаизмом, так как не дает достаточной базы для развития теории
+            \end{itemize}
+    \end{enumerate}
+\end{note}
+
+\subsection{Сигма-алгебра событий}
+
+Для аксиоматического определения вероятности необходимо уточнить понятие события
+
+Заметим, что:
+
+\begin{itemize}
+    \item данное ранее нестрогое определение события как произвольного подмножества в $\Omega$ использовать нельзя, так как в этом случае теория будет противоречивой (смотреть парадокс Рассела)
+    \item по этой причине событиями мы будем называть лишь те подмножества множества $\Omega$, которые принадлежат заранее оговоренному набору подмножеств
+    \item с точки зрения здравого смысла понятно, что если относительно событий $A$ и $B$ известно, наступили они в данном эксперименте или нет, то также должно быть известно, наступили ли в этом эксперименте события $\overline{A}$, $A+B$, $AB$, ... По этой причине указанный набор подмножеств должен быть замкнут относительно операций над событиями $\overline{}, +, \cdot, \backslash$ ... Эти соображения приводят к следующему определению
+\end{itemize}
+
+\begin{defenition}
+    Пусть
+    \begin{enumerate}
+        \item $\Omega$ - пространство 
+        \item $B$ - набор подмножеств множества $\Omega$
+
+            $B$ называется $\sigma$-алгеброй событий, если
+            \begin{enumerate}
+                \item $B \ne \emptyset$
+                \item $A \in B \Rightarrow \overline{A} \in B$
+            \end{enumerate}
+
+        \item Если $A_1, \dots, A_n, \dots \in B$, то $A_1 + \dots + A_n + \dots \in B$
+    \end{enumerate}
+\end{defenition}
+
+\subsubsection{Простейшие свойства сигма-алгебры событий}
+
+\begin{enumerate}
+    \item $\Omega \in B$
+    \item $\emptyset \in B$
+    \item если $A_1, \dots, A_n, \dots \in B$, то $A_1 \cdot \dots \cdot A_n \cdot \dots \in B$
+    \item если $A,B \in B$, то $A \backslash B \in B$
+\end{enumerate}
+
+\begin{proof}
+\hfil
+
+    \begin{enumerate}
+        \item $B \ne \emptyset \Rightarrow \exists A \in B$
+
+            В соотвествии с аксиомой 2) $\overline{A} \in B$
+
+            В соответствии с 3) $\underbrace{A + \overline{A}}_{\Omega} \in B$
+
+        \item $\Omega \in B \Rightarrow \overline{\Omega} \in B$
+
+        \item $\overline{A_1} + \dots + \overline{A_n} + \dots \in B \Rightarrow \overline{\overline{A_1} + \dots + \overline{A_n} + \dots} \in B \Rightarrow A_1 \cdot \dots \cdot A_n \cdot \dots \in B$
+
+        \item $A \backslash B = A \overline{B}$
+
+            $A, B \in B \Rightarrow a, \overline{B} \in B \Rightarrow A \overline{B} \in B$
+    \end{enumerate}
+\end{proof}
+
+\begin{note}
+    \begin{enumerate}
+        \item В дальнейшем, говоря о вероятности всегда будем предполагать, что задана некоторая сигма-алгебра событий. При этом слово "событие" всегда будет обозначать элемент этой сигма-алгебры
+        \item Если множество $\Omega$ конечно, то в качестве сигма-алгебры событий на $\Omega$ всегда будем рассматривать
+
+            $$
+            B = 2^\Omega
+            $$
+    \end{enumerate}
+\end{note}
+
+Случайно выбранного человека попросили выбрать одно из трех: камень, ножныци, бумагу
+
+$$
+\Omega = \{\text{К,Н,Б}\}
+$$
+
+$$
+B = 2^\Omega = \{ \emptyset, \{\text{К}\}, \{\text{Н}\}, \{\text{Б}\}, \{\text{К,Н}\}, \{\text{К,Б}\}, \{\text{Н,Б}\}, \underbrace{\{\text{К,Н,Б}\}}_\Omega \}
+$$
+
+\subsection{Аксиоматическое определение вероятности}
+
+Пусть
+
+\begin{enumerate}
+    \item $\Omega$ пространство элементов исходов некоторого эксперимента
+    \item $B$ - сигма-алгебра на $\Omega$
+\end{enumerate}
+
+\begin{defenition}
+    Вероятностью (вероятностной мерой) называется отображение
+
+    $$
+    P: B \to R
+    $$
+
+    обладающее свойствами
+
+    \begin{enumerate}
+        \item $\forall A \in B$
+        
+        $ P(A) \geq 0$ (аксиома неотрицательности)
+        \item $P(\Omega) = 1$ (аксиома нормированности)
+        \item если $A_1, ..., A_n, ... \in B$ попарно несовместные события, то $P(A_1 + .. + A_n + ..) = P(A_1) + ... + P(A_n) + ...$ (расширенная аксиома сложения)
+    \end{enumerate}
+\end{defenition}
+
+\begin{defenition}
+    Тройка $(\Omega, B, P)$ называется вероятностным пространством
+\end{defenition}
+
+\subsubsection{Свойства вероятности}
+
+\begin{enumerate}
+    \item $P(\overline{A}) = 1 - P(A)$
+    \item $P(\emptyset) = 0$
+    \item Если $A \subseteq B$, то $P(A) \le P(B)$
+    \item $\forall A \in B $
+    
+    $0 \le P(A) \le 1$
+    \item $P(A+B)=P(A)+P(B)-P(AB)$
+    \item Для любого конечного набора событий $A_1,...A_n \in B$ справедливо 
+
+        $$
+        P(A_1+...+A_n) = \sum_{1 \le i \le n} P(A_i) - \sum_{1 \le i_1 < i_2 \le n}P(A_{i_1}, A_{i_2}) + \sum_{1 \le i_1 < i_2 < i_3 \le n} P(A_{i_1}, A_{i_2}, A_{i_3}) - ... + (-1)^{n+1} P(A_1\cdot ... \cdot A_n)
+        $$
+\end{enumerate}
+
+\begin{proof}
+\hfil
+
+    \begin{enumerate}
+        \item $A + \overline{A} = \Omega$
+
+            $A \overline{A} = \emptyset \Rightarrow \text{ аксиома 3 } P(A + \overline{A}) = P(A) + P(\overline{A})$
+
+            $\Rightarrow P(\overline{A}) = 1 - P(A)$
+
+        \item $P(\emptyset) = P(\overline{\Omega}) = \text{ свойство 1 } = 1 - P(\Omega) = 0$
+
+        \item $A \subseteq B$
+
+            $B = A + (B \backslash A) \Rightarrow P(B) = P(A) + P(B \backslash A)$
+
+            $\Rightarrow P(B) \geq P(A)$
+
+        \item $P(A) \geq 0$ вытекает из аксиомы 1
+
+            Покажем, что $P(A) \le 1$
+
+            $A \subseteq \Omega \Rightarrow \text{ по свойству}$
+            
+       \item 
+        \begin{enumerate}
+        \item
+       		$$ A+B = A + (B \backslash A) $$
+       		$$ A \text{ и } B \backslash A - \text{несовместны}$$ 
+       		По аксиоме 3 $$P(A+B)=P(A)+P(B \backslash A)$$
+	\item
+		$$B=(B \backslash A) + (AB)$$
+		$$ AB\text{ и } B \backslash A - \text{несовместны}$$ 
+		По аксиоме 3 $$P(B)=P(B \backslash A)+P(AB)$$
+		$$P(B \backslash A) = P(B)-P(AB)$$
+       
+       \item
+       		Из $a, b$
+		$$P(A+B)=P(A)+P(B)-P(AB)$$
+
+       \end{enumerate}
+    \end{enumerate}
+\end{proof}
+
+\begin{note}
+    Иногда вместо расширенной аксиомы сложения 3 рассматривают следующие две аксиомы
+
+    \begin{enumerate}
+        \item[3')] Для любых попарно несовместимых событий $A_1,...$ $A_n P(A_1...+A_n) = P(A_1) + ... + P(A_n)$ (аксиома сложений)
+
+        \item[3'')] Для любых несовместимых поселедовательностей событий $A_1 \subseteq A_2 \subseteq ... \subseteq A_n \subseteq ...$ справедливо
+
+            $$
+            \lim_{n \to \infty} P(A_n) = P(A), \text{ где } A = A_1 + ... A_n + ...
+            $$
+
+            (аксиома непрерывности)
+    \end{enumerate}
+
+    Можно показать, что
+
+    $$
+    3^o \Leftrightarrow
+    \begin{cases}
+        3' \\
+        3'' \\
+    \end{cases}
+    $$
+\end{note}
+
+\section{Условная вероятность}
+
+\subsection{Определение условной вероятности}
+
+Пусть 
+
+\begin{enumerate}
+    \item $A, B$ - случайные события, связанные с некоторым экспериментом
+    \item известно, что в результате эксперимента произошло событие $B$ 
+\end{enumerate}
+
+Как эта информация повлияет на вероятность того, что в результате этого эксперимента произошло событие $A$?
+
+Из колоды в 36 карт случайным образом извлекли одну карту
+
+$$
+A = \{ \text{извлечен туз} \}
+$$
+
+$$
+B = \{ \text{извлечена картинка} \}
+$$
+
+Тогда
+
+$$
+P(A) = \frac{4}{36} = \frac{1}{9}
+$$
+
+$$
+P_B(A) = \text{наступило B} \to \text{извлечена карта B,D,K,T} = \frac{4}{16} = \frac{1}{4}
+$$
+
+Таким образом дополнительная информация об осуществлении события $B$ изменила вероятность события $A$
+
+\begin{note}
+    Рассмотрим классическую схему для определения вероятности имеется $N$ развовозможных исходов, $|A| = N_A,\ |B| = N_B$
+
+    Так как известно, что в результате эксперимента наступило $B$, то вне исхода, не попавшие $B$, можно не рассматривать
+
+    В этом случае событие $A$ может наступить лишь при реализации одного из исходов, входящих в $AB$.
+
+    $$
+    P_B(A) = \frac{N_{AB}}{N_B} = \frac{N_{AB} / N}{N_B / N} = \frac{P(AB)}{A(B)}
+    $$
+\end{note}
+
+\begin{defenition}
+    Пусть $(\Omega, \beta, P)$ - вероятностное пространство (не обязательно реализует классическую схему)
+
+    Условная вероятность осуществления события $A$ при условии, что произошло событие $B$, называют число
+
+    $$
+    P(A|B) = \frac{P(AB)}{P(B)}, P(B) \ne 0
+    $$
+\end{defenition}
+
+\begin{note}
+    \begin{enumerate}
+        \item Для того, чтобы подчеркнуть разницу, "обычную" вероятность иногда будем называть безусловной
+        \item Зафиксируем некоторое событие $B$ и будем рассматривать $P(A|B)$ как функцию события $A \in \beta$
+    \end{enumerate}
+\end{note}
+
+\begin{theorem}
+    Условная вероятность $P(A|B)$ удовлетворяет трем аксиомам безусловной вероятности 
+\end{theorem}
+
+\begin{proof}
+    \begin{enumerate}
+        \item 
+            $$
+            P(A|B) = \frac{P(AB) \geq 0}{P(B) > 0} \geq 0
+            $$
+
+        \item
+            $$
+            P(\Omega|B) = \frac{P(\Omega B)}{P(B)} = \frac{P(B)}{P(B)} = 1
+            $$
+
+        \item пусть $A_1, ..., A_n,...$ - набор попарнонепересекающихся событий
+
+            $$
+            P(A_1 + A_2 + ... | B) = \frac{P((A_1 + A_2 + ...)B)}{P(B)} = \text{свойство счетной дистрибутивности} = \frac{P(A_1B + A_2B + ...)}{P(B)}
+            $$
+
+            \begin{enumerate}
+                \item $A_i \cdot A_j = \emptyset \text{ при } i \ne j$
+                \item $A_iB \subseteq A_i$, $A_jB \subseteq A_j$
+                \item а,б $\Rightarrow (A_i, B)(A_j, B) = \emptyset \Rightarrow$ расширенная аксиома сложения для $A_1B, A_2B, ...$
+            \end{enumerate}
+
+            $$
+            = \frac{P(A_1B) + P(A_2B) + ...}{P(B)} = \text{свойство сходящихся рядов} = 
+            $$
+
+            $$
+            = \frac{P(A_1B)}{P(B)} + \frac{P(A_2B)}{P(B)} + ... = P(A_1|B) + P(A_2|B) + ...
+            $$
+    \end{enumerate} 
+\end{proof}
+
+\begin{cont}
+    Условная вероятность $P(A|B)$ при фиксированном событии $B$ обладает всеми свойствами безусловной вероятности:
+
+    \begin{enumerate}
+        \item $P(\overline{A}|B) = 1 - P(A|B)$
+        \item $P(\emptyset|B) = 0$
+        \item Если $A_1 \subseteq A_2$, то $P(A_1|B) \le P(A_2|B)$
+        \item $0 \le P(A|B) \le 1$
+        \item $P(A_2 + A_2|B) = P(A_1|B) + P(A_2|B) - P(A_1A_2|B)$
+        \item $P(A_1+...A_n|B) = \sum_{1\le i_1 \le n} P(A_{i_1}|B) = \sum_{1 \le i_1 < i_2 \le n} P(A_{i_1}A_{i_2}|B) + \sum_{1 \le i_1 < i_2 < i_3 \le n} A(A_{i_1}A_{i_2}A_{i_3}|B) + ... + (-1)^{n-1} P(A_1A_2...A_n|B)$
+    \end{enumerate}
+\end{cont}
+
+\begin{proof}
+    Свойства 1-6 безусловной вероятности являются следствиями аксиом 1-3 вероятности. Так как условная вероятность удовлетворяет этим аксиомам, то для нее выполнятся и аналоги свойств 1-6.
+\end{proof}
+
+Среды 15 лотерейных билетов 5 выигрышных. Сначала 1-й игрок тянет 1 билет, затем 2-й тянет один билет.
+
+$$
+A_1 = \{ \text{первый игрок достал выигрышный билет} \}
+$$
+
+$$
+A_2 = \{ \text{второй игрок достал выигрышный билет} \}
+$$
+
+$$
+P(A_2|A_1) = ?
+$$
+
+1-й способ по определению условной вероятности
+
+$$
+P(A_2|A_1) = \frac{P(A_1A_2)}{P(A_1)}
+$$
+
+\begin{enumerate}
+    \item Исход $(x_1,x_2)$, где $x_i$ - номер билета, извлеченного 2-м игроком, $x_i \in \{ 1, ... , 15 \}$ - размещение без повторов из 15 по 2
+
+        $$
+        N = 15 \cdot 14
+        $$
+
+        $$
+        (\underbrace{x_1}_{\text{выигр.}}, ?)
+        $$
+
+    \item $N_A = 5 \cdot 14$
+
+        $$
+        P(A_1) = \frac{5 \cdot 14}{15 \cdot 14} = \frac{1}{3}
+        $$
+
+    \item $N_{A_1A_2} = 5 \cdot 4 = 20$
+
+        $$
+        (\underbrace{x_1}_5, \underbrace{x_2}_4)
+        $$
+
+        $$
+        P(A_1A_2) = \frac{20}{15 \cdot 14} = \frac{2}{21}
+        $$
+
+    \item $P(A_2|A_1)$
+
+        $$
+        P(A_2 | A_1) = \frac{P(A_1A_2)}{P(A_1)} = \frac{2}{7}
+        $$
+\end{enumerate}
+
+2-й способ подсчитаем $P(A_2|A_1)$, перестроив в пространство $\Omega$
+
+$$
+P(A_2|A_1) = \text{известно, что наступило } A_1 \Rightarrow \text{ осталось 14 билетов, из кот. 4 выигр.} = \frac{4}{14} = \frac{2}{7}
+$$
+
+\subsection{Формула умножения вероятностей}
+
+\begin{theorem}
+    Формула умножения вероятностей для двух событий
+
+    Пусть 
+
+    \begin{enumerate}
+        \item $A_1, A_2$ - события связанные с некоторым случайным экспериментом
+        \item $P(A_1) > 0$
+    \end{enumerate}
+
+    Тогда
+
+    $$
+    P(A_1A_2) = P(A_1)P(A_2|A_1)
+    $$
+\end{theorem}
+
+\begin{proof}
+    \begin{enumerate}
+        \item Так как $P(A_1) \ne 0$, то по определению
+
+            $$
+            P(A_2|A_1) = \frac{P(A_1A_2)}{P(A_1)} \Rightarrow P(A_1A_2) = P(A_1)P(A_2|A_1)
+            $$
+    \end{enumerate}    
+\end{proof}
+
+\begin{theorem}
+    Формула умножения вероятностей для $n$ событий
+
+    Пусть
+
+    \begin{enumerate}
+        \item $A_1,...,A_n$ - события, связанные с некоторым случайным экспериментом
+        \item $P(A_1,...,A_n) > 0$
+    \end{enumerate}
+
+    Тогда
+
+    $$
+    P(A_1 \cdot A_2 ... A_n) = P(A_1)P(A_2|A_1)P(A_3|A_1A_2) \cdot ... \cdot P(A_n|A_1...A_{n-1})
+    $$
+\end{theorem}
+
+\begin{proof}
+    \begin{enumerate}
+        \item $A_1 \cdot ... \cdot A_{n-1} \subseteq A_1 \cdot ... \cdot A_k$, если $k \le n-1$
+
+            $\Rightarrow P(A_1 \cdot ... \cdot A_{n-1}) > 0$ -- свойство вероятности
+
+            Таким образом все входящие в правую часть формулы умножения условные вероятности определены
+
+        \item $P(\underbrace{A_1 \cdot ... \cdot A_{n-1}}_A, \underbrace{A_n}_B) = $ из теоремы умножения для 2-х событий $=$
+
+            $$
+            = P(A_1 \cdot ... \cdot A_{n-1})P(A_n|A_1 \cdot ... \cdot A_{n-1}) =
+            $$
+
+            $$
+            = P(A_1 \cdot ... \cdot A_{n-2})P(A_{n-1}|A_1 \cdot ... \cdot A_{n-2})P(A_n | A_1 \cdot ... \cdot A_{n-1}) = ... =
+            $$
+
+            $$
+            = P(A_1)P(A_2|A_1)P(A_3|A_1A_2) \cdot ... \cdot P(A_n|A_1...A_{n-1})
+            $$
+    \end{enumerate}
+\end{proof}
+
+На 7 карточках написаны буквы, составляющие слово "шоколад". Карточки перемешивают и случайным образом извлекают последовательно 3 карточки (без возвращения)
+
+$$
+A = \{ \text{в порядке извлечения эти карточки образуют слово "код".} \}
+$$
+
+\begin{enumerate}
+    \item Обозначим
+
+        $$
+        A_1 = \{ \text{при первом извлечении появилась "к".} \}
+        $$
+
+        $$
+        A_2 = \{ \text{при втором извлечении появилась "о".} \}
+        $$
+
+        $$
+        A_3 = \{ \text{при третьем извлечении появилась "д".} \}
+        $$
+
+        Тогда
+
+        $$
+        A = A_1 A_2 A_3
+        $$
+
+    \item 
+        $$
+        P(A) = P(A_1A_2A_3) = \underbrace{P(A_1)}_{\frac{1}{7}} \underbrace{P(A_2|A_1)}_{\frac{2}{6} = \frac{1}{3}} \underbrace{P(A_3|A_1A_2)}_{\frac{1}{5}} = \frac{1}{105}
+        $$
+
+\end{enumerate}
+
+\subsection{Независимые события}
+
+\begin{defenition}
+    Пусть $A$ и $B$ - события, связанные с некоторым случайным экспериментом. События $A$ и $B$ называются независимыми, если
+
+    $$
+    P(AB) = P(A)P(B)
+    $$
+\end{defenition}
+
+\begin{theorem}
+    \hfill
+
+    \begin{enumerate}
+        \item Пусть $P(B) > 0$,
+
+            Тогда $A,B$ - независимые $\Leftrightarrow P(A|B) = P(A)$
+
+        \item Пусть $P(A) > 0$,
+
+            Тогда $A,B$ - независимые $\Leftrightarrow P(B|A) = P(B)$
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    Докажем первую часть
+
+    \begin{enumerate}
+        \item $\Rightarrow$ (необходимость)
+
+            $$
+            P(A|B) = \frac{P(BA)}{P(B)} = \text{события независимы} = \frac{P(A)P(B)}{P(B)} = P(A)
+            $$
+
+        \item $\Leftarrow$ (достаточность)
+
+            $$
+            P(AB) = P(B) > 0 \Rightarrow \text{ используем теорему умножения вероятностей} = P(B) \cdot P(A|B) = 
+            $$
+
+            $$
+            = \text{по условию P(A|B) = P(A)} = P(A)P(B) \Rightarrow A,B \text{ - независимы}
+            $$
+    \end{enumerate}
+\end{proof}
+
+\begin{note}
+    В качестве определения независимых событий $A$ и $B$ кажется более логичным выбрать условие$P(A|B) = P(A) \text{ или } P(B|A) = P(B)$, а не условие  $P(AB) = P(A)P(B)$. Однако последнее условие работает всегда, а то время как первые два условия работают лишь при $P(B) > 0\ (P(A) > 0)$
+\end{note}
+
+Из колоды 36 карт случайным образом извлекают одну карту.
+
+$$
+A = \{ \text{извлечен туз} \}
+$$
+
+$$
+B = \{ \text{извлечена карта красной масти} \}
+$$
+
+Являются ли $A$ и $B$ независимыми
+
+\begin{enumerate}
+    \item $P(A) = \frac{4}{36} = \frac{1}{9}$
+    \item $P(B) = \frac{18}{36} = \frac{1}{2}$
+    \item $P(AB) = | AB = \{ \text{извлечен туз красной масти} \} | = \frac{2}{36} = \frac{1}{18}$
+    \item $P(AB) = P(A)P(B)$
+
+        $$
+        \frac{1}{18} = \frac{1}{9} \cdot \frac{1}{2}
+        $$
+
+        Верно $\Rightarrow$ $A$,$B$ - независ.
+\end{enumerate}
+
+\begin{theorem}
+    Пусть $A$,$B$ - независимые. Тогда независимыми являются события
+
+    \begin{enumerate}
+        \item $\overline A$ и $B$
+        \item $A$ и $\overline B$
+        \item $\overline A$ и $\overline B$
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    \begin{enumerate}
+        \item Проверим равенство $P(\overline A B) = P(\overline A) P(B)$
+        
+            \begin{enumerate}
+                \item если $P(B) = 0 \Rightarrow$ Пр. 4 = 0
+
+                $$
+                \overline A B \subseteq B \Rightarrow P(\overline A B) \le P(B) = 0 \Rightarrow P(\overline A B) = 0
+                $$
+
+            \item если $P(B) > 0$, то
+
+                $$
+                P(\overline A B) = P(B) P(\overline A | B) = P(B)(1-P(A|B)) = \text{A,B - независимые}
+                $$
+
+                $$
+                = P(B)(1-P(A)) = P(\overline A)P(B)
+                $$
+            \end{enumerate}
+
+        \item Аналогично доказать самостоятельно
+        \item Аналогично доказать самостоятельно
+    \end{enumerate}
+\end{proof}
+
+\begin{defenition}
+    События $A_1,...,A_n$ незываются независимыми попарно, если
+
+    $$
+    \forall \forall i,j \in \{1,...,n\},i \ne j, A_i \text{ и } A_j \text{ - независимые}
+    $$
+\end{defenition}
+
+\begin{defenition}
+    События $A_1,...A_n$ называются независимыми в совокупности, если
+
+    $$
+    \forall k \in \{2,...,n\} \forall \forall i_1,...,i_k : 1 \le i_1 < i_2 < ... < i_k \le n
+    $$
+
+    $$
+    P(A_{i_1},...,A_{i_k}) = P(A_{i_1}) \cdot ... \cdot P(A_{i_k})
+    $$
+\end{defenition}
+
+\begin{note}
+    Это определение означает, что $A_1,...,A_n$ - независимы в совокупности, если:
+
+    \begin{enumerate}
+        \item $P(A_{i_1} A_{i_2}) = P(A_{i_1})P(A_{i_2})$
+        \item $P(A_{i_1} P_{i_2} P_{i_3}) = P(A_{i_1})P(A_{i_2}) P(A_{i_3})$
+        \item[...]
+        \item[n-1.] $ P(A_1 ... A_n) = P(A_1) \cdot ... \cdot P(A_n) $
+    \end{enumerate}
+\end{note}
+
+\begin{note}
+    Очевидно, что $A_1,...,A_n$ - независимы в совокупности $\Rightarrow$ $A_1,...,A_n$ - независимы попарно, обратное неверно.
+\end{note}
+
+Рассмотрим правильный тетраэдр, на гранях которого написаны цифры 1,2,3. Причем на первой грани написана только 1, на второй написано 2, на третьей 3, а на последней написаны все 3 цифры.
+
+Тэтраэдр подбрасывают.
+
+$$
+A_1 = \{ \text{на нижней грани 1} \}
+$$
+
+$$
+A_2 = \{ \text{на нижней грани 2} \}
+$$
+
+$$
+A_3 = \{ \text{на нижней грани 3} \}
+$$
+
+$$
+P(A_1) = \frac{2}{4} = \frac{1}{2} = P(A_2) = P(A_3)
+$$
+
+$$
+P(A_1A_2) = | \text{на нижней грани есть 1 и 2} | = \frac{1}{4} = P(A_1A_3) = P(A_2A_3)
+$$
+
+Таким образом
+
+$$
+P(A_1A_2) = P(A_1)P(A_2)
+$$
+
+
+$$
+P(A_1A_3) = P(A_1)P(A_3)
+$$
+
+$$
+P(A_2A_3) = P(A_2)P(A_3)
+$$
+
+$$
+P(A_1A_2A_3) = |\text{на нижней грани одновременно 1,2,3}| = \frac{1}{4} \ne \frac{1}{8} = P(A_1)P(A_2)P(A_3)
+$$
+
+Таким образом $A_1,A_2,A_3$ не являются независимыми в совокупности
+
+\subsection{Формула полной вероятности}
+
+Пусть $(\Omega, \beta, P)$ - вероятностное пространство
+
+\begin{defenition}
+    Будем говорить, что события $H_1, ..., H_n$ образуют полную группу, если
+
+    \begin{enumerate}
+        \item $H_1 + ... + H_n = \Omega$
+        \item $H_i H_j = \emptyset, i\ne j$
+        \item $P(H_i) > 0, i = \overline{1;n}$
+    \end{enumerate}
+\end{defenition}
+
+\begin{theorem}
+    О формуле полной вероятности
+
+    Пусть
+
+    \begin{enumerate}
+        \item $H_1,...,H_n$ - полная группа событий
+        \item $A \in B$ - некоторое событие
+    \end{enumerate}
+
+    Тогда
+
+    $$
+    P(A) = P(A|H_1)P(H_1) + ... + P(A|H_n)P(H_n)
+    $$
+\end{theorem}
+
+\begin{proof}
+   Пусть $A$ может захыватывать некоторые события из $H_1,H_2,...,H_n$
+
+   $$
+   P(A) = P(A \Omega) = P(A(H_1+...+H_n)) = P(AH_1 + ... + AH_n) = 
+   $$
+
+   События $H_iH_j = \emptyset$, $(AH_i) \subseteq H_i, (AH_j) \subseteq H_j  \Rightarrow (AH_j)(AH_i) = \emptyset$
+
+   $$
+   = P(AH_1) + .. + P(AH_n) = P(A|H_1)P(H_1) + ... + P(A|H_n)P(H_n)
+   $$
+\end{proof}
+
+В магазин поступили телевизоры 3-х фирм, из которых 30\% произведено 1-й фирмой, 50\% произведено второй фирмой, 20\% произведено 3-й фирмой. Известно, что среди телевизоров 1-й фирмы 7\%, 2-й - 5\%, 3-й - 10\% брака. Найти вероятность того, что случайно выбранный телевизор окажется бракованным?
+
+\begin{enumerate}
+    \item Рассмотрим полную группу событий
+
+        $$
+        H_1 = \{ \text{выбранный телевизор произведен 1-й фирмой} \}
+        $$
+
+
+        $$
+        H_2 = \{ \text{выбранный телевизор произведен 2-й фирмой} \}
+        $$
+
+
+        $$
+        H_3 = \{ \text{выбранный телевизор произведен 3-й фирмой} \}
+        $$
+
+        Обозначим:
+
+        $$
+        A = \{ \text{выбранный телевизор бракованный} \}
+        $$
+
+    \item Формула полной вероятности
+
+        $$
+        P(A) = \underbrace{P(A|H_1)}_{0.07} \underbrace{P(H_1)}_{0.3} + \underbrace{P(A|H_1)}_{0.05} \underbrace{P(H_2)}_{0.5} + \underbrace{P(A|H_3)}_{0.1} \underbrace{P(H_3)}_{0.2} = ... = 0.066
+        $$
+\end{enumerate}
+
+\subsection{Формула Байеса}
+
+\begin{theorem}
+    О формуле Байеса
+
+    Пусть
+
+    \begin{enumerate}
+        \item Выполнены условия теоремы о формуле полной вероятности
+        \item $P(A) > 0$
+    \end{enumerate}
+
+    Тогда
+
+    $$
+    P(H_i|A) = \frac{P(A|H_i) P(H_i)}{P(A|H_1) P(H_1) + ... + P(A|H_n) P(H_n) }, i = \overline{1;n}
+    $$
+\end{theorem}
+
+\begin{proof}
+    $$
+    P(H_i|A) = \{\text{По определению условной вероятности}\}= \frac{P(H_i A)}{P(A)} = 
+    $$
+     $$
+    = \{\text{По теореме умножения и формуле полной вероятности}\}= \frac{P(A|H_i) P(H_i)}{P(A|H_1) P(H_1) + ... + P(A|H_n) P(H_n) }
+    $$
+\end{proof}
+
+Рассмотрим пример о покупке телевизора. Пусть известно, что куплен бракованный телевизор. Какой фирмой он вероятнее всего произведен?
+
+$$
+P(H_1| \underbrace{A}_\text{куплен брак. тел.}) = \frac{P(A|H_1)P(H_1)}{P(A)} = \frac{0.07 \cdot 0.3}{P(A)} = \frac{0.021}{P(A)}
+$$
+
+$$
+P(H_2|A) = \frac{P(A|H_2)P(H_2)}{P(A)} = \frac{0.05 \cdot 0.5}{P(A)} = \frac{0.025}{P(A)} \text{ - max}
+$$
+
+$$
+P(H_3|A) = \frac{P(A|H_3)P(H_3)}{P(A)} = \frac{0.2 \cdot 0.1}{P(A)} = \frac{0.02}{P(A)}
+$$
+
+Ответ: вероятнее всего этот телевизор произведен второй фирмой
+
+\begin{note}
+    \begin{enumerate}
+        \item События $H_1,...,H_n$, образующие полную группу, часто называют \textbf{гипотезами}
+        \item Вероятности $P(H_i), i = \overline{1;n}$ - называют \textbf{априорными}, так как они известны до опыта. Вероятности $P(H_i|A), i = \overline{1;n}$, которые становятся известны только после эксперимена, называют \textbf{апостериорными}.
+    \end{enumerate}
+\end{note}
+
+\subsection{Схема испытаний Бернулли}
+
+Рассмотрим случайный эксперимент, в результате которого возможна реализация одного из двух элементарных исходов, условно называемых успехом и неудачей, то есть в рассматриваемом случайном эксперимента
+
+$$
+\Omega = \{ 0,1 \}, \text{ где 0 - неудача, а 1 - успех }
+$$
+
+Обозначим $P\{\text{успех}\} = p$, тогда $P\{\text{неудача}\} = 1 - p = q$
+
+\begin{enumerate}
+    \item Подбрасвают монету, успех - выпадает герб, неудача - выпадение решки
+    \item Бросают игральную кость, успех - выпадение 6, неудача - все остальное
+    \item Наблюдает пол новорожденного, успех - рождение мальчика, неудача - рождение девочки
+\end{enumerate}
+
+\begin{defenition}
+    Схемой испытаний Бернулли будем называть серию однотипных экспериментов указанного вида, в которой вероятность реализации успеха не изменяется от эксперимента к эксперименту.
+\end{defenition}
+
+\begin{note}
+    Условие неизменности вероятности успеха на протяжении всей серии означает, что отдельные испытания независмиы. Другими словами, вероятность реализации успеха в $j$-м эксперименте не зависит от исходов, имевших место в 1-м, 2-м, ..., $j-1$-м испытаниях.
+\end{note}
+
+Обозначим $P_n(k)$ - вероятность того, что в серии из $n$ экспериментов по схеме Бернулли прошло ровно $k$ успехов
+
+\begin{theorem}
+    Пусть проводится серия из $n$ экспериментов по схеме Бернулли с вероятностью успеха $p$. Тогда
+
+    $$
+    P_n(k) = C_n^k p^k q^{n-k}, \text{ где } C_n^k = \frac{n!}{k!(n-k)!} \text{ - биномиальные коэффициенты}, q = 1-p, k = \overline{0;n}
+    $$
+\end{theorem}
+
+\begin{proof}
+    \hfill
+
+    \begin{enumerate}
+        \item Запишем результат проведения серии из $n$ экспериментов с использованием кортежа
+
+            $$
+            (x_1,x_2,...,x_n), \text{ где } x_i =
+            \begin{cases}
+                1, \text{ если в i-м исходе успех} \\
+                0, \text{ если в i-м исходе неудача} \\
+            \end{cases}
+            $$
+
+            $$
+            A = \{ \text{в серии из n экспериментов произошло ровно k успехов} \} = \{ (x_1,... x_n) : \sum_{i=1}^n x_i = k \}
+            $$
+
+        \item $|A| = ?$
+
+            Каждый входящий в $A$ кортеж однозначно определеяется номерами позиций, в которых стоят единицы, то есть набором $k$ чисел из множества $\{ 1,.., n\}$. Таких наборов существует $C_n^k$ штук, то есть $|A| = C_n^k$
+
+            $$
+            (0,1,0,0,1,1), n = 6
+            $$
+
+        \item  Рассмотрим исход $(x_1, ..., x_n) \in A$. Вероятность осуществления:
+
+            $$
+            P\{(x_1,...,x_n)\} =P\{\{\text{в 1-м испытаний}\},  \{ \text{во 2-м испытании x2} \},...,\{\text{в n-м испытании xn}\}\} = 
+            $$
+            \{так как отдельные испытания независимы\}
+            $$
+            = P \{ \{ \text{в 1-м испытании x1} \} \cdot \{ \text{во 2-м испытании x2} \} \cdot ... \cdot \{ \text{в n-м испытании xn} \} \} =
+            $$
+            \{в серии ровно $k$ успехов и $n-k$ неудач, в этом произведении k сомножителей $p$ и $n-k$ сомножителей q\}
+            
+            $$
+            = p^kq^{n-k}
+            $$, все исходы равновероятны
+
+        \item Так как вероятность осуществления любого исхода из $A$ равна $p^k q^{n-k}$, а всего в $A$ $C_n^k$ исходов, то $P(A) = C_n^k p^k q^{n-k}$
+    \end{enumerate}
+\end{proof}
+
+\begin{cont}
+    $$
+    P_n(k_1 \le k \le k_2) = \sum_{j=k_1}^{k_2} C_n^j p^j q^{n-j}
+    $$
+
+    Вероятность того, что число успехов в серии из $n$ экспериментов по схеме Бернулли заключено между $k_1$ и $k_2$
+\end{cont}
+
+\begin{proof}
+    \hfill
+
+    \begin{enumerate}
+        \item Обозначим:
+
+            $$
+            A = \{ k_1 \le k \le k_2 \}
+            $$
+
+            $$
+            A_j = \{ k = j \}, j = \overline{k_1;k_2}
+            $$
+
+            Тогда
+
+            $$
+            A = \sum_{j = k_1}^{k_2} A_j
+            $$
+
+        \item $A_j \cdot A_l = \{ \text{в серии произошло одновременно j и ровно l успехов} \} =$
+
+            $$
+            =
+            \begin{cases}
+                A_j, j=l \\
+                0, j \ne l \\
+            \end{cases}
+            $$
+
+            $$
+            P(A) = P(\sum_{j=k_1}^{k_2}) = \{попарное пересечение Aj\} = \sum_{j=k_1}^{k_2} P(A_j) = \sum_{j=k_1}^{k_2} C_n^j p^j q^{n-j}
+            $$
+    \end{enumerate}
+\end{proof}
+
+\begin{cont}
+    $$
+    P_n(k \geq 1) = 1 - q^n
+    $$
+
+    Вероятность того, что в серии из $n$ экспериментов по схеме Бернулли произошел хотя бы один успех
+\end{cont}
+
+\begin{proof}
+    Пусть $A = \{ \text{в серии произошле хотя бы один успех} \}, \overline A = \{ \text{ни одного успеха} \}$
+
+    $$
+    P(A) = 1 - P(\overline{A}) = 1 - P_n(0) = 1 - C_n^0 p^0 q^n = 1 - q^n
+    $$
+\end{proof}
+
+5 раз бросают игральную кость.
+
+$$
+A = \{ \text{6 выпадет ровно два раза} \}
+$$
+
+$$
+B = \{ \text{6 выпадет хотя бы 2 раза} \}
+$$
+
+$$
+P(A),P(B) = ?
+$$
+
+Успех = \{выпадение 6\}
+
+Неудача = \{ выпадение 1,2,3,4,5 \}
+
+$$
+p = \frac{1}{6}\ \ q = \frac{5}{6}
+$$
+
+\begin{enumerate}
+    \item
+        $$
+        P(A) = P_5(2) = C_5^2 \cdot \bigg(\frac{1}{6}\bigg)^2 \cdot \bigg(\frac{5}{6}\bigg)^3 \approx 0.161
+        $$
+
+    \item
+
+        $$
+        P(B) = P_5(2 \le k \le 5) = \sum_{j=2}^5 C_5^j \bigg(\frac{1}{6}\bigg)^j \bigg(\frac{5}{6}\bigg)^{5-j}
+        $$
+
+        $$
+        = 1 - P(\overline B) = 1 - P_5(0 \le k \le 1) = 1 - P_5(0) - P_5(1) = 1 - \bigg(\frac{5}{6}\bigg)^5 - 5 \bigg(\frac{1}{6} \bigg) \bigg(\frac{5}{6}\bigg)^4 \approx 0.196
+        $$
+\end{enumerate}
+
+\chapter{Случайные величины}
+
+\section{Одномерные случайные величины}
+
+\subsection{Понятие случайной величины}
+
+\begin{defenition}
+    (Нестрогое) Пусть исход некоторого случайного эксперимента можно описать числом $X$, тогда $X$ - случайная величина
+\end{defenition}
+
+\begin{enumerate}
+    \item Бросают монету
+
+        $$
+        X =
+        \begin{cases}
+            0, \text{ если выпала решка} \\
+            1, \text{ если выпал герб}
+        \end{cases}
+        $$
+
+    \item $n$ раз бросают игралюную кость
+
+        $$
+        X_1 - \text{число выпадений 6}, X_1 = \{0,1,2,...,n\}
+        $$
+
+        $$
+        X_2 - \text{суммарное число выпавших очков}, X_2 \in \{n, n+1, ..., 6n\}
+        $$
+
+    \item У случайно выбранного пациента в больнице измеряют темературу $X$ тела, $X \in [34,42]$
+\end{enumerate}
+
+\begin{defenition}
+    Пусть $(\Omega, \beta, P)$ - вероятностное пространство
+
+    Случайной величиной называется отображение $X: \Omega \to R$ такое, что $\forall x \in R$ множество
+
+    $$
+    \{ \omega : X(\omega) < x \} \in \beta - \text{ является событием}
+    $$
+\end{defenition}
+
+\begin{note}
+    \hfill
+
+    \begin{enumerate}
+        \item Упрощенно на случайную величину моэно смотреть, как на случайный эксперимент, в котором бросают точку на прямую (случайным образом)
+        \item Предположим, что мы провели эксперимент с бросанием точки достаточно большое число раз. Отложим в точках прямой частоты появления отдельных возможых значений случайной величины
+
+            \begin{enumerate}
+                \item Если
+
+                    $$
+                    X =
+                    \begin{cases}
+                        0, \text{ если решка} \\
+                        1, \text{ если герб}
+                    \end{cases}
+                    $$
+
+                    то частоты появления 0 и 1 будут примерно равны $\frac{1}{2}$
+
+                \item Если $X_1 -$ число выпадений 6, то $\{ \lambda = 0\} = P_n(0) = \big( \frac{5}{6} \big)^n$
+
+                \item $X - $ температура тела пациента
+            \end{enumerate}
+
+        \item Таким образом различные случайные величины могут иметь различные множества значений. При этом у различных случайных величин даже одному и тому же значению могту отвечать различные вероятности
+    \end{enumerate}
+\end{note}
+
+\begin{defenition}
+    Законом распределения верояности случайной величины называется правило, которое возможным значениям (множествам значений) этой случайной величины приписывает вероятности того, что она примет эти значения или значения из этих множеств.
+\end{defenition}
+
+Универсальным способом задания закона распределения любой случайной величины является задание ее функции распределения вероятностей.
+
+\subsection{Функция распределения вероятностей}
+
+\begin{defenition}
+    Пусть $X$ - случайная величина
+
+    Функцией распределения вероятностей случайной величины $X$ называется отображение: $F: R \to R$, определенное правилом $F: x \to P\{X < x\}$
+\end{defenition}
+
+2 раза бросают симметричную монету, $X$ - число выпадений герба. Найти функцию распределения случайной величины $X$
+
+\begin{enumerate}
+    \item $X \in \{0,1,2\}$
+
+        $$F(x_1) = P\{X < x_1\} = 0$$
+
+        $$F(0) = P\{X < 0\} = 0$$
+
+        $$P\{X=0\} = P_2(0) = q^2 = \frac{1}{4}$$
+
+        $$P\{X=1\} = P_2(1) = \frac{1}{2}$$
+
+        $$P\{X=2\} = P_2(2) = \frac{1}{4}$$
+
+        \begin{tabular}{|c||c|c|c|}
+            \hline
+            $X$ & 0 & 1 & 2 \\
+            \hline
+            $P$ & $\frac{1}{4}$ & $\frac{1}{2}$ & $\frac{1}{4}$ \\
+            \hline
+        \end{tabular}
+
+        $$
+        F(x_2) = P\{X<x_2\} = P\{X=0\} = \frac{1}{4}
+        $$
+
+        $$
+        F(1) =  P\{X<1\} = P\{X=0\} = \frac{1}{4}
+        $$
+
+        $$
+        F(x_2) =  P\{X<x_2\} = P\{X\in\{0,1\}\} = P\big\{ \{X=0\} + \{X=1\} \big\} = P\{X=0\} + P\{X=1\} = \frac{3}{4}
+        $$
+
+        Таким образом
+
+        $$
+        F(x) =
+        \begin{cases}
+            0, x \le 0 \\
+            \frac{1}{4}, 0 < x \le 1 \\
+            \frac{3}{4}, 1 < x \le 2 \\
+            1, 2 < x
+        \end{cases}
+        $$
+\end{enumerate}
+
+\subsubsection{Свойства функции распределения}
+
+\begin{enumerate}
+    \item $0 \le F(x) \le 1$
+    \item если $x_1 \le x_2$, то $F(x_1) \le F(x_2)$
+    \item $\lim_{x \to - \infty} F(x) = 0$, $\lim_{x \to +\infty} F(x) = 1$
+    \item $P\{x_1 \le X < x_2\} = F(x_2) - F(x_1)$
+    \item $\lim_{x \to x_0} F(x) = F(x_0)$, то есть в каждой точки $x \in R$ функция распределения непрерывна слева
+\end{enumerate}
+
+\begin{proof}
+
+    \hfill
+
+    \begin{enumerate}
+        \item $F(x) = P\{...\} \Rightarrow 0 \le F(x) \le 1$
+
+        \item $\{x < x_2\} = \{X < x_1\} + \{x_1 \le X < x_2\} (*)$
+
+            $$
+            P\{X < x_2\} = P \big\{ \{X<x_1\} + \{x_1 \le X < x_2 \} \big\} = P\{X < x_1\} + P\{x_1 \le X < x_2\} \Rightarrow F(x_2) \geq F(x_1)
+            $$
+
+        \item[4.] (*) $\Rightarrow P\{x_1 \le X < x_2\} = F(x_2) - F(x_1)$
+             \item[3.] Рассмотрим последовательность чисел
+
+            $$
+            x_1, x_2, ..., x_n, ...
+            $$
+
+            такую, что
+
+            \begin{enumerate}
+                \item $x_1 \le x_2 \le ... \le x_n \le ...$ - неубывающая последовательность
+                \item $\lim_{u \to + \infty} F(x_u) = + \infty$
+            \end{enumerate}
+
+            Пусть $A_n = \{ X < x_n \}$ - событие
+
+            Тогда
+
+            \begin{enumerate}
+                \item $A_1, A_2, ..., A_n, ...$ - неубывающая последовательность событий
+                \item $U_{n=1}^{\infty} A_n = \{ X < +\infty \}$
+
+                    $\lim_{n \to + \infty} P(A_n) = \lim_{n \to \infty} P(U_{n=1}^\infty A_n)$ 
+            \end{enumerate}
+            
+            $\lim_{n \to \infty} P(X < x_n) = P\{X < + \infty \}$
+
+            $\{X < + \infty\}$ - достоверное $\Rightarrow P\{X<+\infty\} = 1$
+
+            так как $x_1,...,x_n,..$ - произвольная последовательность, то в соответствии с
+            определением предела получаем
+
+            $$
+            \lim_{n \to \infty} F(x_n) = 1
+            $$
+
+            обратно аналогично
+
+        \item Рассмотрим последовательность
+
+            \begin{enumerate}
+                \item $x_1 \le x_2 \le ... \le x_n < x_0$
+                \item $\lim_{n \to \infty} x_n = x_0$
+            \end{enumerate}
+
+            Очевидно, что $x_n \to x_0 -$ (стремится слева)
+
+    \end{enumerate}
+\end{proof}
+
+\begin{note}
+    Можно доказать, что любая функция $F : R \to R$, удовлетворяющая свойствам 2,3,5 является функцией распределения некоторой случайной величины. 
+\end{note}
+
+\subsection{Дискретные случайные величины}
+
+\begin{defenition}
+    Случайная величина $X$ называется дискретной, если множество ее возможных значений конечно или счетно.
+\end{defenition}
+
+Закон распределения случайной дискретной величины $X$
+
+\begin{tabular}{c|c|c|c|c|c}
+    \hline
+    $X$ & $x_1$ & $x_2$ & $...$ & $x_n$ & $...$ \\
+    \hline
+    $P\{X = x_i\}$ & $p_1$ & $p_2$ & $...$ & $p_n$ & $...$ \\
+    \hline
+\end{tabular}
+
+Здесь
+
+$$
+p_i = P\{X = x_i\}
+$$
+
+
+$$
+\sum_i p_i = 1
+$$
+
+\begin{note}
+    Эта таблица называется рядом расширения вероятностей случайной величины $X$ 
+\end{note}
+
+\begin{enumerate}
+    \item Пусть $X$ - число выпадений герба при двух подбросах симметричной монеты
+
+        \begin{tabular}{|c||c|c|c|}
+                \hline
+                $X$ & 0 & 1 & 2 \\
+                \hline
+                $P$ & $\frac{1}{4}$ & $\frac{1}{2}$ & $\frac{1}{4}$  \\
+                \hline
+        \end{tabular}
+
+    \item Пусть $X$ - число бросков симметричной монеты до 1-го выпадения герба
+
+        $$
+        x \in \{0,1,2,...\}
+        $$
+
+        $$
+        P\{X=0\} = P\{\text{при 1-м броске герба}\} = \frac{1}{2}
+        $$
+
+        $$
+        P\{X=1\} = P\{\text{при 1-м броске решка, при 2-м - герб}\} = P\{(\text{Р},\text{Г})\} = P\{\text{Р}\} P\{\text{Г}\} = \frac{1}{4}
+        $$
+
+        \begin{tabular}{|c||c|c|c|c|c|c}
+                \hline
+                $X$ & 0 & 1 & 2 & ... & $n$ & ... \\
+                \hline
+                $P$ & $\frac{1}{2}$ & $\frac{1}{4}$ & $\frac{1}{8}$ & ... & $\frac{1}{2^{n+1}}$ & ...  \\
+                \hline
+        \end{tabular}
+
+        Проверка
+
+        $$
+        \sum_{n=0}^\infty P\{X=n\} = \frac{1}{2} + \frac{1}{4} + \frac{1}{8} + ... = \frac{1}{2} \bigg(1 + \frac{1}{2} + \frac{1}{4} + ...\bigg) = \frac{1}{2} \cdot \frac{1}{1 - \frac{1}{2}} = 1
+        $$
+
+\end{enumerate}
+
+\subsection{Непрерывные случайные величины}
+
+\begin{defenition}
+    Случайная величина $X$ называется непрерывной, если $\exists$ функция $f : R \to R$ такая,
+    что $\forall x \in R$ $F(x) = \int_{-\infty}^x f(t) dt$, где $F$ - функция расширения случайной величины $X$.
+
+    При этом функция $f$ называется функцией плотности распределения вероятностей случайной величины $X$.
+\end{defenition}
+
+\begin{note}
+    \begin{enumerate}
+        \item Функция плотности это площадь под графиком $f(x)$ до значения $x$
+        \item Для большинства предствавляющих практический интерес непрерывности случайной велечины функция плотности является кусочно-непрерывной. Это означает, что функция $F$ - непрерывна. Именно по этой причине такие случайные величина и называются непрерывными.
+        \item Если $f$ - непрерывна в точке $x_0$, то 
+
+            $$
+            f(x_0) = F'(x) |_{x=x_0}
+            $$
+
+            мы используем теорему о производной интеграла с переменным верхним пределом
+
+        \item Из определения непрерывной случайной величины $\Rightarrow$
+
+            $$
+            f(t) \Rightarrow F(x)
+            $$
+
+            (если известна $f$, то можно найти $P$)
+
+            из замечаний 3 $\Rightarrow$ 
+
+            $$
+            F(x) \Rightarrow f(t)
+            $$
+
+            Таким образом функция $f$ плотности, как и функция $F$ расширения, содержит всю информаци о законе распределения случайной величины. Поэтому закон распределения случайной величины можно задавать функцией распределения, так и с функцией плотности.
+    \end{enumerate}
+\end{note}
+
+\subsubsection{Свойства непрерывной случайной величины}
+
+\begin{enumerate}
+    \item $\forall x \in R$ $f(x) \geq 0$
+    \item $P\{x_1 \le X < x_2 \} = \int_{x_1}^{x_2} f(x) dx$, где $f$ - функция плотности
+    \item $\int_{-\infty}^{+\infty} f(x)dx = 1$
+    \item $P\{x \le X < x_0 + \Delta x\} \approx f(x_0) \Delta x$, где $f$ - функция плотности, $x_0$ - точка непрерывности функции $f$
+    \item Если $X$ - непрерывная случайная велечина, то для любого наперед заданного $x_0$
+        $P\{X = x_0\} = 0$
+\end{enumerate}
+
+\begin{proof}
+    \begin{enumerate}
+        \item $f(x_0) = F'(x)$
+
+            Так как $F$ неубывающая функция, то $F'(x)$, т.е. $f(x) \geq 0$
+
+        \item $P\{x_1 \le X < x_2\} = F(x_2) - F(x_1) = \int_{x_1}^{x_2} f(x) dx$
+
+        \item 
+            $$
+            \int_{-\infty}^{+\infty} f(x) dx = \lim_{
+            \begin{cases}
+                x_1 \to -\infty \\
+                x_2 \to + \infty \\
+            \end{cases}
+        } \int_{x_1}^{x_2} f(x) dx = \lim_{
+            \begin{cases}
+                x_1 \to -\infty \\
+                x_2 \to + \infty \\
+            \end{cases}
+        } \big[ F(x_2) - F(x_1) \big] = 1-0 = 1
+            $$
+
+        \item без доказательства
+
+        \item 
+            $$
+            P\{X=X_0\} = \lim_{\Delta x \to 0} P\{x_0 \le X < x_0 + \Delta x\} =
+            \lim_{\Delta x \to 0} \big[ F(x_0 + \Delta x) - F(x_0) \big]
+            $$
+
+            Так как мы считае $F$ непрерывной, то
+
+            $$
+            = F(x_0) - F(x_0) = 0
+            $$
+    \end{enumerate}
+\end{proof}
+
+\begin{note}
+    Пусть $X$ - непрерывная случайная велечина
+
+    $$
+    P\{x_1 < X < x_2\} =
+    P\{\{ x_1 \le X < x_2\} + \{X=x_2\}\} = P\{x_1 \le X < x_2\} + P\{X=x_2\} = P\{x_1 \le X < x_2\}
+    $$
+
+    $$
+    \{x_1 \le X \le x_2\} = \{x_1 \le X < x_2\} + \{X = x_2\}
+    $$
+
+    Аналогично можно доказать, что для непрерывной случайной величины
+
+    $$
+    P\{ x_1 < X \le x_2\} = P\{x_1 < X < x_2\} = P\{x_1 \le X < x_2\}
+    $$
+
+    Иногда с учетом этих результатов свойство 2 записывается в виде
+
+    $$
+    P\{x_1 \le X \le x_2\} = \int_{x_1}^{x_2} f(x) dx
+    $$
+\end{note}
+
+\subsection{Основные законы распределения случайной величины}
+
+В этом пункте мы рассмотрим некоторые примеры случайных величин, законы распределения которых часто встречаются на практике.
+
+\subsubsection{Биномальная случайная величина}
+
+\begin{defenition}
+    Говорят, что случайная величина $X$ распределена по биноминальному закону с параметрами $n \in N$ и $p \in (0;1)$, если она принимает значения $0,1,...,n$ с вероятностями $P\{X = k\} = C_n^k \cdot p^k \cdot q^{n-k}, k \in \{0,...,n\}$, где $q = 1-p$
+\end{defenition}
+
+Обозначим $X \sim B(n,p)$ - распределена по закону
+
+\begin{note}
+    \begin{enumerate}
+        \item Очевидно, $X$ - дискретная случайная величина
+
+        \begin{tabular}{|c||c|c|c|c|c|c|}
+            \hline
+            $X$ & $0$ & $1$ & ... & $k$ & ... & $n$ \\
+            \hline
+            $P$ & $p^n$ & $C_k^1p^1q^{1-k}$ & ... & $C_n^kp^kq^{n-k}$ & ... & $q^n$ \\
+            \hline
+        \end{tabular}
+
+    \item Случайная величина $X \sim B(n,1)$ - число успехов в серии $n$ испытаний по схеме Бернулли с вероятностью успеха $p$
+    \end{enumerate}
+\end{note}
+
+\subsubsection{Пуассоновская случайная величина}
+
+\begin{defenition}
+    Говорят, что случайная величина $X$ распределена по закону Пуассона с параметром $\lambda > 0$ $(\lambda \in (0; + \infty))$, если она принимает значения $0,1,2,...$ с вероятностями
+
+    $$
+    P\{X=k\} = \frac{\lambda^k}{k!}e^{-\lambda}, k = 0, 1, 2, ...
+    $$
+
+    Обозначим
+
+    $$
+    X \sim \Pi(\lambda)
+    $$
+\end{defenition}
+
+\begin{note}
+    \begin{enumerate}
+        \item Проверим условие с 
+
+            $$
+            \sum_{k=0}^{\infty} P\{X = k\} = \sum_{k=0}^\infty \frac{\lambda^k}{k!} e^{-\lambda} = e^{-\lambda} \sum_{k=0}^\infty \frac{\lambda^k}{k!} = 1
+            $$
+
+        \item Распределение Пуассона называется законом редких событий, так как оно проявляется там, где происходит большое число испытаний с малой вероятностью успеха. Например, число метеоритов, упавших в данном районе за некоторый фиксированный промежуток времени, имеет распределение Пуассона при некотором подходящем значениям параметра $\lambda$
+    \end{enumerate}
+\end{note}
+
+
+\subsubsection{геометрическое распределение}
+
+\begin{defenition}
+    Говорят, что случайная величина $X$ имеет геометрическое распределение с параметром $p$, если $X$ принимает целые неотрицательные значения
+
+    $$
+    p\{X=k\} = pq^K, k \in \{0,1,2, ...\}, p\in(0;1), q = 1-p
+    $$
+\end{defenition}
+
+\begin{note}
+    \begin{enumerate}
+        \item Проверим условие
+
+            $$
+            \sum_{k=0}^\infty P\{X=k\} = \sum_{k=0}^\infty pq^K = p \sum_{k=0}^\infty q^K = q^0+q+q^2+...=\frac{1}{1-q}=p \cdot \frac{1}{p} = 1
+            $$
+
+        \item С содержательной точки зрения случайной величины $X$, имеющая геометрическое расширение с параметром $p$, = количество эксериментов в схеме Бернулли, которое нужно произвести \underline{до} 1-го появления успеха (т.е. если первый успех произошел в $n$-м испытании, то $X=n-1$)
+    \end{enumerate}
+
+\end{note}
+
+\subsubsection{Равномерное распределение}
+
+\begin{defenition}
+    Говорят, что случайная величина $X$ равномерно распределена на отрезке $[a;b]$, если $X$ является непрерывной случайной величиной, функция плотности распределения которой имеет вид
+
+    $$
+    f(x) =
+    \begin{cases}
+        c, x \in [a;b] \\
+        0, \text{ иначе} \\
+    \end{cases}, \text{ где } c = const
+    $$
+\end{defenition}
+
+\begin{note}
+    \begin{enumerate}
+        \item График
+        \item Константу $c$ можно найти из условия нормировки:
+
+            $$
+            1 = \int_{-\infty}^\infty f(x) dx = \int_a^b c dx = c(b-a) \Rightarrow c = \frac{1}{b-a}
+            $$
+
+        \item Равномерное распределение реализует геометрическое определение вероятности в одномерном случае $(n=1)$
+
+        \item График функции распределения случайной величины $X$, равномерно распределенной на $[a;b]$
+
+            $$
+            F(x) = \int_{-\infty}^x f(t)dt
+            $$
+
+            $$
+            F(x) =
+            \begin{cases}
+                0, x \le a \\
+                c(b-a) = \frac{x-a}{b-a}, a < x \le b \\
+                1, x > b \\
+            \end{cases}
+            $$
+
+        \item Обозначим
+
+            $$
+            X \sim R[a,b]
+            $$
+    \end{enumerate}
+\end{note}
+
+\subsubsection{Экспериментальное рапределение}
+
+\begin{defenition}
+    Говорят, что случайная величина $X$ распределена по экспоненциальному закону с параметром $\lambda > 0$, если $X$ не является непрерывной случайной величиной, функция плотности распределения которой имеет вид
+
+    $$
+    f(x) =
+    \begin{cases}
+        \lambda e^{-\lambda x}, x > 0 \\
+        0, x < 0 \\
+    \end{cases}
+    $$
+\end{defenition}
+
+\begin{note}
+    \begin{enumerate}
+        \item Обозначим $X \sim Exp(\lambda)$
+        \item График
+        \item Проверим условие нормировки
+
+            $$
+            \int_{-\infty}^{\infty} f(x) dx = \int_{-\infty}^\infty \lambda e^{-1x} dx = \frac{-\lambda}{\lambda} e^{-\lambda x} |_{0}^{+\infty} = -(0-1) = 1
+            $$
+
+        \item График функции распределения
+
+            $$
+            F(x) = \int_{-\infty}^x = f(t)dt =
+            \begin{cases}
+                0, x \le 0 \\
+                1 - e^{-\lambda x}, x > 0 \\
+            \end{cases}
+            $$
+
+            При $x > 0$
+
+            $$
+            F(x) = \lambda \int_0^x e^{-\lambda x} = e^{-\lambda x}|_x^0 = 1 - e^{-\lambda x}
+            $$
+
+        \item Для многих технических устройств время $X$ их безотказной работы распределено по экспоненциальному закону, содержащему параметр $\lambda$. Так, если некоторое устройство начинает работаеть в момент времени $t=0$, а момент времени, в который оно выйдет из строя мы обозначим через $X$, то $X \sim Exp(\lambda)$.
+    \end{enumerate}
+\end{note}
+
+\subsubsection{Нормальная случайная величина}
+
+\begin{defenition}
+    Говорят, чт ослучайная величина $X$ имеет нормальное (гауссовское) распределение с параметрами $m$ и $\sigma^2$, если $X$ является непрерывной случайной величиной, функция плотности которой имеет следующий вид
+
+    $$
+    f(x) = \frac{1}{\sqrt{2 \pi} \sigma} e^{- \frac{(x-m)^2}{2 \sigma^2}}, x \in R
+    $$
+\end{defenition}
+
+\begin{note}
+    \begin{enumerate}
+        \item $X \sim N(m, \sigma^2)$ - обозначение
+        \item График. Параметр $m$ отвечает за смещение графика по оси $Ox$. Параметр $\sigma$ отвечает за концентрацию графика в районе точки $x=m$: чем меньше $\sigma$, тем больше концентрация (график сжимается по оси $Ox$)
+        \item Функция распределения случайной величины $X$, имеющей нормальное распределение общего вида
+
+            $$
+            F(x) = \int_{-\infty}^x f(t)dt = \frac{1}{\sqrt{2 \pi} \sigma} \int_{-\infty}^x e^{- \frac{(x-m)^2}{2 \sigma^2}}
+            $$
+
+            Доказывается, что $F$ не является элементарной функцией (соответствующий интеграл является неберущимся).
+
+        \item Говорят, что случайная величина $X \sim N(0,1) (m=0, \sigma^2= 1)$ имеет стандартное нормальное распределение. Функция распределения такой случайной величины
+
+            $$
+            \Phi(x) = F(x) = \frac{1}{\sqrt{2 \pi}} \int_{-\infty}^{x} e^{-\frac{t^2}{2}} dt
+            $$
+
+            Значение функции $\Phi$ затабулированы (то есть составлена таблица значений функции $\Phi$)
+
+        \item Вместо функции $\Phi$ часто рассматривают фунцию
+
+            $$
+            \Phi_0(x) = \frac{1}{\sqrt{2 \pi}} \int_0^x e^{-\frac{t^2}{2}} dt
+            $$
+
+            Свойства функции $\Phi_0$:
+
+            \begin{enumerate}
+                \item $\Phi_0 = \frac{1}{2} + \Phi_0(x)$
+                \item $\Phi_0(-x) = -\Phi_0(x)$ (нечетная функция)
+                \item $\lim_{x\to -\infty} = -\frac{1}{2}$
+
+                    $\lim_{x\to \infty} = \frac{1}{2}$
+
+                \item $\Phi_0(0) = 0$
+            \end{enumerate}
+
+        \item Пусть случайная величина $X \sim N(m, \sigma^2)$
+
+            $$
+            P\{ a <\le X <\le b \} = \text{свойство непрерывности сл. вел.} = \int_a^bf(t)dt = \frac{1}{\sqrt{2\pi}} \int_a^b e^{-\frac{(t-m)^2}{2\sigma^2}} dt =
+            $$
+
+            Заменим переменные
+
+            $$
+            \begin{matrix}
+                y = \frac{t-m}{\sigma} \Leftrightarrow t = \sigma y + m \\
+                dt = \sigma dy \\
+                t = a \Rightarrow y = \frac{a-m}{\sigma} \\
+                t = b \Rightarrow y = \frac{b-m}{\sigma} \\
+            \end{matrix}
+            $$
+
+            $$
+            = \frac{\sigma}{\sqrt{2\pi}\sigma} \int_{\frac{a-m}{\sigma}}^{\frac{b-m}{\sigma}} e^{-\frac{y^2}{2}} dy = ... = \Phi(\frac{b \cdot m}{\sigma}) - \Phi(\frac{a-m}{\sigma})
+            $$
+
+            $$
+            P\{a <\le X <\le b\} = \Phi(\frac{b-m}{\sigma}) - \Phi(\frac{a-m}{\sigma}), X \sim N(m, \sigma^2)
+            $$
+
+            Так как $\Phi(x) = \frac{1}{2} + \Phi_0(x)$, то справедливо
+
+            Если $X \sim N(m, \sigma^2)$, то
+
+            $$
+            P\{ a <\le X <\le b \} = \Phi_0(\frac{b-m}{\sigma}) - \Phi_0(\frac{a-m}{\sigma})
+            $$
+
+        \item Нормальное распределение играет особенную роль в теории вероятностей и математической статистике. Большинство случайных величин, описывающих естесвенные процессы, протекание которых, зависит от большого числа случайных факторов, имеют номальное распределение.
+    \end{enumerate}
+\end{note}
+
+\section{Случайные векторы}
+
+\subsection{Функция распределения случайного вектора}
+
+Пусть
+
+\begin{enumerate}
+    \item $(\Omega, \beta, P)$ - вероятностное пространство
+    \item $X_1, ..., X_n$ - случайные величины, заданные на этом пространстве
+\end{enumerate}
+
+\begin{defenition}
+    Случайным вектором размерности $n$ называется кортеж
+
+    $$
+    (X_1, X_2,..., X_n)
+    $$
+\end{defenition}
+
+\begin{note}
+    \begin{enumerate}
+        \item Иногда $n$-мерный случайный вектор называют $n$-мерной случайной величиной
+        \item Компонент случайного вектора $(X_1,...,X_n)$ называют его координатами
+    \end{enumerate}
+\end{note}
+
+\begin{example}
+
+    \hfill
+
+    \begin{enumerate}
+        \item Производят стрельбу по плоской мишени (пулей)
+
+            $$
+            (X_1, X_2) \text{ - координаты точки попадания пули образуют двумерный случайный вектор}
+            $$
+
+        \item У случайного выбранного пациента больницы измеряют
+
+            H - рост, M - масса тела, Т - температура тела, Р - верхняя граница давления, V - объем легких
+
+            $$
+            (H,M,T,P,V)
+            $$
+    \end{enumerate}
+\end{example}
+
+\begin{note}
+    \begin{enumerate}
+        \item Как правило, мы будем рассматривать случай $n=2$
+        \item Упрощенно на двумерный случайный вектор можно смотреть как на случайный эксперимент, в котором на плоскость бросают точку.
+
+            Закономерность, в соответствии с которой при многократном повторении эксперимента точка будет чаще или реже попадать в те или иные области на плоскости, состовляет закон распределения вероятностей рассматриваемого слайного вектора. Универнсальным способом задания закона распределения случайного вектора является использовании функции распределения.
+    \end{enumerate}
+\end{note}
+
+\begin{defenition}
+    Функцией распределения случайного вектора $(X_1, ..., X_n)$ называется отображение $F: R^n \to R$, определенное пределом
+
+    $$
+    F(x_1,...,x_n) = P\{X_1 < x_1,..., X_n < x_n\}
+    $$
+\end{defenition}
+
+\begin{note}
+    \begin{enumerate}
+        \item В определении под знаком вероятности написано произведение событий:
+
+            $$
+            \{X_1 < x_1\} \cdot ... \cdot \{X_n < x_n\}
+            $$
+
+        \item В случае $n=2$, если интерпретировать вектор $(X_1,X_2)$ как эксперимент, в котором на плоскость бросают точку, значение $F(x_1,x_2)$ равно вероятности того, что случайным образом на плоскость точка упадет левее и ниже точки $(x_1,x_2)$
+
+            $$
+            F(x_1,...,x_n) = P\{X_1 < x_1,..., X_n < x_n\}
+            $$
+    \end{enumerate}
+\end{note}
+
+\subsubsection{Свойства функции распределения $(n = 2)$}
+
+\begin{enumerate}
+    \item $0 \le F(x_1, x_2) \le 1$
+    \item
+        \begin{enumerate}
+            \item при фиксированном $x_2$ функция $F(x_1,x_2)$ как функция одной переменной $x_1$ является неубывающей
+            \item при фиксированном $x_1$ функция $F(x_1,x_2)$ как функция одной переменной $x_2$ является неубывающей
+        \end{enumerate}
+    \item 
+        $$\lim_{x_1 \to - \infty, x_2 = const} = F(x_1, x_2) = 0$$
+
+        $$\lim_{x_2 \to - \infty, x_1 = const} = F(x_1, x_2) = 0$$
+
+    \item 
+        $$\lim_{x_2 \to +\infty, x_1 \to +\infty} = F(x_1, x_2) = 1$$
+
+    \item
+
+        $$
+        \lim_{x_1 \to +\infty, x_2 = const} F(x_1, x_2) = F_{X_2} (x_2)
+        $$
+
+
+        $$
+        \lim_{x_2 \to +\infty, x_1 = const} F(x_1, x_2) = F_{X_1} (x_1)
+        $$
+
+        где $F_{X_1}, F_{X_2}$ - функции распределения случайных величин $X_1$ и $X_2$ соответственно
+
+        Рассматривая случайные величины $(X_1, X_2)$ можно временно забыть о случайной величине $X_2$ и понаблюдать только за $X_1$.
+
+    \item $P\{ a_1 \le X_1 < b_1, a_2 \le X_2 < b_2 \} = F(b_1, b_2) - F(a_1, b_2) - F(a_2, b_1) + F(a_1, a_2)$
+
+    \item 
+        \begin{enumerate}
+            \item при фиксированном $x_2$, функция $F(x_1,x_2)$ как функция одной переменной $x_1$ является непрерываной слева в каждой точке
+            \item при фиксированном $x_1$, функция $F(x_1,x_2)$ как функция одной переменной $x_2$ является непрерываной слева в каждой точке
+        \end{enumerate}
+\end{enumerate}
+
+\begin{proof}
+    \begin{enumerate}
+        \item $F(x_1, x_2) = P\{ ... \} \Rightarrow 0 \le F(x_1, x_2) \le 1$
+        \item Доказывается аналогично одномерному случаю
+        \item докажем, что $\lim_{x_1 \to -\infty, x_2 = const} F(x_1, x_2) = 0$, второе равенство доказывается аналогично
+
+            $$
+            F(x_1, x_2) = P \{\{ X_1 < x_1 \} \{ X_2 < x_2 \}\}
+            $$
+
+            Если $x_1 \to -\infty$, то событие $\{X_1 < x_1\}$ становится невозможным, произведение невозможного события на событие 
+
+            $\{X_2 < x_2\}$ является невозможным $\Rightarrow \lim F(x_1, x_2) = 0$
+
+        \item $F(x_1, x_2) = P \{\{ X_1 < x_1 \}\{X_2 < x_2\}\}$
+
+            При $x_1 \to +\infty$ событие $\{X_1 < x_1\}$ становится достоверным, при $x_2 \to +\infty$ событие $\{X_2 < x_2\}$ также становится достоверным, а поскольку произведение достоверных событий является достоверным событием, то
+
+            $$
+            \lim_{x_1 \to +\infty, x_2 \to +\infty} = 1
+            $$
+
+        \item Докажем, что $\lim_{x_1 \to +\infty, x_2 = const}(x_1, x_2) = F_{X_2}(x_2)$
+
+            $$
+            F(x_1, x_2) = P\{ \{ X_1 < x_1 \} \{ X_2 < x_2 \} \}
+            $$
+
+            При $x_1 \to +\infty$ событие $\{ X_1 < x_1 \}$ становится достоверным, произведение достоверного сыбытия на событие $\{X_2 < x_2\}$ равно последнему, поэтому
+
+            $$
+            \lim_{x_1 \to +\infty, x_2 = const} F(x_1, x_2) = P\{X_2 < x_2\} = F_{X_2} (x_2) \text{(о пределе функции распределения)}
+            $$
+
+        \item
+            \begin{enumerate}
+                \item Найдем вероятность попадания случайного вектора $(X_1, X_2)$ в полуполуполосу:
+
+                    $$
+                    P\{X_1 < x_1, a_2 \le X_2 < b_2\}
+                    $$
+
+                    Заметим, что
+
+                    $$
+                    \{X_1 < x_1, X_2 < b_2\} = \{X_1 < x_1, a_2 \le X_2 < b_2\} + \{X_1 < x_1, X_2 < a_2\}
+                    $$
+
+                    Два этих события несовместны. От обех частей возьмем вероятность и, используя теорему сложения получим
+
+                    $$
+                    P\{X_1 < x_1, X_2 < x_2\} = P\{X_1 < x_1, a_2 \le X_2 < b_2\} + P\{X_1 < x_1, X_2 < a_2\}
+                    $$
+
+                    Таким образом
+
+                    $$
+                    P\{ X_1 < x_1, a_2 \le X_2 < b_2 \} = F(x_1, b_2) - F(x_1, a_2)
+                    $$
+
+                \item Найдем $P\{a_1 \le X_1 < b_1, a_2 \le X_2 < b_2\}$
+
+                    $$
+                    \{ X_1 < b_1, a_2 \le X_2 < b_2 \} = \{ X_1 < a_1, a_2 \le X_2 < b_2\} + \{ a_1 \le X_1 < b_1, a_2 \le X_2 < b_2 \}
+                    $$
+
+                    Эти два события несовместны. Берем $P$ от обеих частей и с использованием теоремы сложения получаем
+
+                    $$
+                    P\{X_1 < b_1, a_2 \le X_2 < b_2\} = P\{ X_1 < a_1, a_2 \le X_2 < b_2 \} + P\{ a_1 \le X_1 < b_1, a_2 \le X_2 < b_2 \} =
+                    $$
+
+
+                    $$
+                    = F(b_1, b_2) - F(b_1, a_2) - F(a_1, b_2) + F(a_1, a_2)
+                    $$
+
+                \item Доказывается аналогично одномерному случаю
+            \end{enumerate}
+    \end{enumerate}
+\end{proof}
+
+\begin{note}
+    \begin{enumerate}
+        \item Рассмотрим свойство 5
+
+            В нем использовались
+
+            $$
+            \begin{matrix}
+                F(x_1, x_2) \text{ - функция распределения случайного вектора } (X_1, X_2) \\
+                F_{X_1}(x_1), F_{X_2} (x_2) \text{ - функции распрееления случайных величин } X_1, X_2
+            \end{matrix}
+            $$
+
+            В теории вероятности используется следующая терминология:
+            $F(x_1, x_2)$ называют также совместной функцией распределения случайных величин $X_1, X_2$, $F_{X_1}(x_1), F_{X_2}(x_2)$ называют маргинальными (частными) функциями распределения случайных величин $X_1, X_2$
+
+        \item Если известна $F(x_1, x_2)$, то с известным свойством 5 можно найти $F_{X_1}, F_{X_2}$.
+
+            Вопрос: можно ли, зная $F_{X_1}, F_{X_2}$, найти $F(x_1, x_2)$?
+            Вообще говоря, нет (так как неизвестна связь между $X_1, X_2$)
+    \end{enumerate}
+\end{note}
+
+\subsection{Дискретные случайные векторы}
+
+\begin{defenition}
+    Случайный вектор
+
+    $$
+    \vec X = (X_1, ..., X_n)
+    $$
+
+    называется дискретным, елси каждая из случайных величин $X_i, i = \overline{1;n}$является дискретной
+\end{defenition}
+
+Рассмотрим случай $n=2$ - случайный вектор $(X,Y)$. Для упрощения рассуждений, будем считать, что случайные величины $X$ и $Y$ принимают значения бесконечных множеств
+
+$$
+X \in \{ x_1, ..., x_m\}, Y = \{y_1,...,y_n\}
+$$
+
+Закон распределения такого случайного вектора удобно задавать с помощью таблицы
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c||c|c|c|c|c||c|}
+        \hline
+        X$\backslash$Y & $y_1$ & ... & $y_j$ & ... & $y_n$ & \\
+        \hline
+        \hline
+        $x_1$ & $p_{11}$ & ... & $p_{1j}$ & ... & $p_{1n}$ & $p_{x_1}$\\
+        \hline
+        $\vdots$ & $\vdots$ & ... & $\vdots$ & ... & $\vdots$ & $\vdots$ \\
+        \hline
+        $x_i$ & $p_{i1}$ & ... & $p_{ij}$ & ... & $p_{in}$ & $p_{x_i}$ \\
+        \hline
+        $\vdots$ & $\vdots$ & ... & $\vdots$ & ... & $\vdots$ & $\vdots$ \\
+        \hline
+        $x_m$ & $p_{m1}$ & ... & $p_{mj}$ & ... & $p_{mn}$ & $p_{x_m}$ \\
+        \hline
+        \hline
+         & $p_{y_1}$ & ... & $p_{y_j}$ & ... & $p_{y_n}$ & \\
+        \hline
+    \end{tabular}
+\end{table}
+
+Здесь
+
+$$
+p_{ij} = P\{(X,Y) = (x_i, y_i)\} = P\{\{ X = x_i \} \cdot \{Y = y_i\}\}
+$$
+
+Эту таблицу дополняют столбцом и строкой. В $i$-й клетке дополнительной строки записывают величину
+
+$$
+p_{y_i} = \sum_{i=1}^m p_{ij}
+$$
+
+В $j$-й клетке дополнительного столбца записывают
+
+$$
+p_{x_i} = \sum_{j=1}^n p_{ij}
+$$
+
+Покажем, что $p_{x_i} = P\{X = x_i\}$, $p_{y_j} = P\{ Y = y_j \}$
+
+$$
+P\{ X=x_i \} = P\{ (X,Y) \in \{ (x_i, y_1), ..., (x_i, y_n) \} \} = 
+P\{ \{(X,Y) = (x_i, y_1)\} + ... \} = \sum = p_{x_i}
+$$
+
+Второе равенство доказывается аналогично
+
+При этом, очевидно, должно выполняться условие
+
+$$
+\sum_{i=1}^m p_{x_i} = \sum_{j=1}^n p_{y_j} = \sum_{i=1}^m \sum_{j=1}^n p_{ij} = 1
+$$
+
+\begin{example}
+    Симметричную монету подбрасывают 2 раза. $X$ - количество выпадений герба. $Y$ - номер броска, при котором герб выпал впервые (будем считать, что $Y=3$, если герб ни разу не выпал)
+\end{example}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c||c|c|c||c|}
+        \hline
+        X$\backslash$Y & 1 & 2 & 3 & \\
+        \hline
+        \hline
+        0  & 0 & 0 & $\frac{1}{4}$ & $\frac{1}{4}$ \\
+        \hline
+        1 & $\frac{1}{4}$ & $\frac{1}{4}$ & 0 & $\frac{1}{2}$ \\
+        \hline
+        2 & $\frac{1}{4}$ & 0 & 0 & $\frac{1}{4}$\\
+        \hline
+        \hline
+          & $\frac{1}{2}$ & $\frac{1}{4}$ & $\frac{1}{4}$ & 1\\
+        \hline
+    \end{tabular}
+\end{table}
+
+\subsection{Непрерывный случайный вектор}
+
+\begin{defenition}
+    Случайный вектор $(X_1 , ..., X_n)$ называется непрерывным, если существует функция
+
+    $$
+    f : R^n \to R
+    $$
+
+    такая, что для любой точки $(x_1, ..., x_n) \in R^n$
+
+    $$
+    F(x_1, ..., x_n) = \int_{-\infty}^{x_1} dt_1 \int_{-\infty}^{x_2} dt_2 ... \int_{-\infty}^{x_n} f(t_1, ..., t_n) dt_n
+    $$
+
+    функция распределения вектора $(X_1, ..., X_n)$. При этом предполагается, что для любой точки $(x_1,...,x_n)$ этот несобственный интеграл сходится.
+\end{defenition}
+
+\begin{note}
+    \begin{enumerate}
+        \item Функция $f$ из опреедления непрерывного случайного вектора называется функциией распределения вероятностей случайного вектора $(X_1, ..., X_n)$
+        \item Для $n = 2$
+
+            $$
+            F(x_1, x_2) = \int_{-\infty}^{x_1} dt_1\int_{-\infty}^{x_2} f(x_1, x_2)dt_2
+            $$
+
+            интеграл выводится по области $<x_1$ и $<x_2$
+
+        \item Всюду в дальнейшем будем предполагать, что функция $f(x_1,...,x_n)$ определена и непрерывна всюду, кроме, быть может, множества меры нуль. Для $n=2$ это означает, что $f(x_1, x_2)$ непрерывна всюду, кроме, быть может, отдельных точек или линий.
+
+        \item $n=2$
+
+            $$
+            F(x_1, x_2) = \int_{-\infty}^{x_1} dt_1 \int_{-\infty}^{x_2} f(t_1, t_2) dt_2
+            $$
+
+            По теореме о производной интеграла с переменным верхним пределом:
+
+            $$
+            f(x_1, x_2) = \frac{\partial^2 F(x_1,x_2)}{\partial x_1 \partial x_2}
+            $$
+
+            для всех $(x_1, x_2)$, в которых $f$ непрерывна
+
+            Аналогично, что в случае $n=2$
+
+        \item Таким образом
+
+            \begin{itemize}
+                \item зная $f$, можно найти $F$
+                \item зная $F$, можно найти $f$
+            \end{itemize}
+
+            Это означает, что функция плотности, как и функция распределения, содержит всю информацию о законе распределения случайного вектора. Для задания закона распределения непрерывного случайного вектора можно использовать любую из этих функций.
+    \end{enumerate}
+\end{note}
+
+\subsubsection{Свойства двумерных непрерывных векторов}
+
+\begin{enumerate}
+    \item $f(x_1, x_2) \geq 0$
+    \item $$P\{ a_1 \le X_1 < b_1, a_2 \le X_2 < b_2 \} = \int_{a_1}^{b_1} dx_1 \int_{a_2}^{b_2} f(x_1, x_2) dx_2$$
+
+    \item $$P\{X_1,X_2 \in D\} = \iint_D f(x_1, x_2)dx_1dx_2$$
+    \item $$\iint_{R^2} f(x_1, x_2) dx_1dx_2 = 1$$ условие нормировки
+    \item $$P\{ x_1 \le X_1 < x_1 + \Delta x_1, x_2 \le X_2 < x_2 + \Delta x_2 \} \approx f(x_1, x_2)\Delta x_1 \Delta x_2$$
+
+        где $\Delta x_1, \Delta x_2$ малы, а $(x_1, x_2)$ - точка непрерывнисти функции
+
+    \item Если $(X_1, X_2)$ - непрерывный случайный вектор, то для любого заданного значения $(x_1^o, x_2^o)$:
+
+        $$
+        P\{X_1, X_2 = (x_1^0, x_2^0)\} = 0
+        $$
+
+    \item
+
+        \begin{enumerate}
+            \item
+
+                $$
+                \int_{-\infty}^{+\infty} f(x_1, x_2)dx_2 = f_{X_1}(x_1)
+                $$
+
+            \item
+
+                $$
+                \int_{-\infty}^{+\infty} f(x_1, x_2)dx_1 = f_{X_2}(x_2)
+                $$
+        \end{enumerate}
+\end{enumerate}
+
+\begin{proof}
+    \begin{enumerate}
+        \item Свойства 1,2,4,5,6 доказываются аналогично одномерному случаю
+        \item Свойство 3 является обобщением свойства 2
+        \item Докажем 7 (a) (7 (б) доказывается аналогично)
+
+            $$
+            F_{X_1}(x_1) = \lim_{x_2 \to +\infty} = \int_{-\infty}^{x_1}\int_{-\infty}^{+\infty} f(t_1, t_2) dt_2
+            $$
+
+            $$
+            f_{X_1}(x_1) = \frac{d}{dx_1} \bigg[ \int_{-\infty}^{x_1}\int_{-\infty}^{+\infty} f(t_1, t_2) dt_2 \bigg] =
+            $$
+
+
+            по теореме о производной интеграла с переменным верхним пределом
+
+            $$
+            = \int_{-\infty}^{+\infty} f(x_1, t_2) dt_2, t_2 = x_2
+            $$
+    \end{enumerate}
+\end{proof}
+
+\begin{note}
+    Функция $f(x_1, x_2)$ - плотность распределения случайного вектора $(X_1,X_2)$ также наызвается двумерной плотностью или совметной плотность распределения случайных велечин $X_1, X_2$. Функции $f_{X_1}, f_{X_2}$ называются одномерными (частными, маргинальными) плотностями
+\end{note}
+
+\begin{example}
+    Случайный вектор $(X_1, X_2)$ имеет функцию плотности
+
+    $$
+    f(x_1, x_2) =
+    \begin{cases}
+        c \cdot x_1 \cdot x_2, (x_1, x_2) \in K \\
+        0, \text{иначе}
+    \end{cases}
+    $$
+
+    где $K$ - квадрат с вершинами $(0,0), (0,1), (1,0), (1,1)$ Найти одномерные пл-ти расширения случайных велечин $X_1, X_2$
+
+    \begin{enumerate}
+        \item найдем $c$
+
+            Условие нормировки
+
+            $$
+            a = \iint_{R^2} f(x_1, x_2) dx_1 dx_2 =
+            $$
+
+            Вне $K$ $f(x_1, x_2) = 0$
+
+            $$
+            \iint_K cx_1x_2dx_1dx_2 = c \int_0^1 dx_1 \int_0^1 x_1x_2dx_2 = c \int_0^1 x_1dx_1 \cdot \int_0^1 x_2 dx_2 = c\cdot \frac{1}{2} \cdot \frac{1}{2} = \frac{c}{4}
+            $$
+
+        \item Найдем $f_{X_1}(x_1)$
+
+            $$
+            f_{X_1}(x_1) = \int_{-\infty}^{+\infty} f(x_1, x_2)dx_2 =
+            \begin{cases}
+                \int_{-\infty}^{+\infty} 0dx_2, \text{ если } x_1 \nin [0;1] \\
+                c \int_0^1 x_1x_2dx_2, \text{ если } x_1 \in [0;1] =
+            \end{cases}
+            $$
+
+            $$
+            =
+            \begin{cases}
+                0, x_1 \nin [0;1] \\
+                4x_1 \int_0^1 x_2 dx_2, x_1 \in [0;1]
+            \end{cases}
+            =
+            \begin{cases}
+                2x_1, x_1 \in [0;1] \\
+                0, \text{ иначе}
+            \end{cases}
+            $$
+
+            Аналогично
+
+            $$
+            f_{X_2}(x_2) =
+            \begin{cases}
+                2x_2, x_2 \in [0;1] \\
+                0, \text{ иначе}
+            \end{cases}
+            $$
+    \end{enumerate}
+\end{example}
+
+\subsection{Независимые случайные величины}
+
+\begin{defenition}
+    Пусть
+
+    \begin{enumerate}
+        \item $(X, Y)$ - двумерный дискретный случайный вектор
+        \item $X \in \{ x_1, ..., x_m \}$, $Y \in \{ y_1, ..., y_n\}$
+    \end{enumerate}
+
+    Для такого вектора определение независимых случайных величин логично дать следующим образцом:
+
+    Случайные величины $X$ и $Y$ наываются независимыме, если
+
+    $$
+    \forall i \in \{ 1,...,m\} \forall j \in \{1,...,n\} P\{ (X,Y) = (x_i, y_j) \} = P\{X=x_i\} P\{Y=y_j\}
+    $$
+\end{defenition}
+
+Посмотрим, что означают выполнение этого промежуточного определения для функции распределения вектора $(X,Y)$
+
+%%%
+%%%
+%%%
+%%%
+%%% ВСТАВИТЬ С ФОТО
+%%% 18 ноября 2019 18:25
+%%%
+%%%
+$$
+F(x,y) = P\{ X < x, Y < y \} =
+\begin{matrix}
+    x_k = \max \{ x_i : x_i < x \} \\
+    y_l = \max \{ y_j : y_j < y \} \\
+\end{matrix}
+= P\{ \{ X \in \{x_1,...,x_k\} \} \cdot \{ Y \in \{y_1, ..., y_l \} \} = P\{ (X,Y) = \{x_i, y_i\}, i = \overline{1;k}, j = \overline{1;l} \} =
+$$
+
+$$
+\sum_{i=1}^k \sum_{j=1}^l P\{ (X,Y) = (x_i, y_j) \} = \sum_{i=1}^k \sum_{j=1}^l P\{X = x_i\} P\{Y = y_j\} =
+$$
+
+$P\{X=x_i\}$ не зависит от $j$
+
+$$
+\bigg( \sum_{i=1}^k P\{X = x_i\}\bigg) \cdot \bigg( \sum_{j=1}^l P\{Y=y_j\} \bigg) = P\{X < x\} P\{Y<y\} = F_{X}(x) F_Y(y)
+$$
+
+Таким образом для произвольного случайного вектора $(X,Y)$ логично сформулировать (полноценное) определение:
+
+\begin{defenition}
+    Случайные величины $X$ и $Y$ называются независимыми, если
+
+    $$
+    F(x,y) = F_X(x)F_Y(y),
+    $$
+
+    где $F$ - функция распределения случайного вектора $(X,Y)$
+
+    $F_X, F_Y$ - частные функции распределения случайных векторов $X$ и $Y$
+\end{defenition}
+
+\subsubsection{Свойства независимых случайных величин}
+
+\begin{enumerate}
+    \item Случайные величины $X, Y$ независимы $\Leftrightarrow \forall x \forall y$ события $\{X<x\}$ и $\{Y < y\}$ независимы
+
+    \item Случайные величины $X$ и $Y$ независимы $\Leftrightarrow \forall \forall x_1,x_2,y_1,y_2$ события $\{x_1 \le X < x_2\}$ и $\{ y_1 \le Y < y_2\}$ независимы
+
+    \item Случайные величины $X$ и $Y$ независимы $\Leftrightarrow$ незвсимимые события $\{X \in M_1\}$ и $\{Y \in M_2\}$ независимы для любых $M_1$ и $M_2$ - промежутков или объединенных промежутков в $R$
+
+    \item Пусть
+
+        \begin{enumerate}
+            \item $(X,Y)$ - дискретный случайный вектор
+
+            \item $p_{ij} = P\{(X,Y) = (x_i, y_j)\}$
+
+            \item $p_{x_i} = P\{X = x_i\}, i = \overline{1;m}$ $p_{y_j} = P\{Y = y_j\}, j = \overline{1;n}$
+        \end{enumerate}
+
+        Тогда $X$ и $Y$ независимы $\Rightarrow p_{ij} \equiv p_{x_i} p_{y_j}, i = \overline{1;m}, j = \overline{1;n}$
+
+
+    \item Пусть
+
+        \begin{enumerate}
+            \item $(X,Y)$ - непрерывный случайный вектор
+            \item $f(x,y)$ - совместная плотность распределения $X$ и $Y$
+            \item $f_X, f_Y$ - маргинальные плотности
+        \end{enumerate}
+
+        Тогда
+
+        $X, Y$ - независимые $\Rightarrow f(x,y) \equiv f_X(x)f_Y(y)$
+\end{enumerate}
+
+\begin{proof}
+    \begin{enumerate}
+        \item Непосредственно следует из определения независимых случайных величин и определения функции распределения
+
+        \item
+
+            \begin{enumerate}
+                \item $\Rightarrow$ (необходимость)
+
+                    Пусть $F(x,y) = F_X(x)F_Y(y)$
+
+                    Тогда
+
+                    $$
+                    P\{ x_1 \le X < x_2, y_1 \le Y < y_2 \} =
+                    $$
+
+                    по свойству двумерной функции распределения
+
+                    $$
+                    = F(x_2,y_2) - F(x_1, y_2) - F(x_2, y_1) + F(x_1, y_1) = =
+                    $$
+
+                    $$
+                    F_X(x_2) F_Y(y_2) - F_X(x_1) F_Y(y_2) - F_X (x_2) F_Y(y_1) + F_X(x_1) F_Y(y_1) =
+                    $$
+
+                    $$
+                    F_X(x_2) \bigg[F_Y(y_2) - F_Y(y_1) \bigg] - F_X (x_1) \bigg[ F_Y(y_2) - F_Y(y_1)\bigg] =
+                    $$
+
+                    $$
+                    \underbrace{\bigg[F_X(x_2) - F_X(x_1)\bigg]}_{P\{x_1 \le X < x_2\}} \underbrace{\bigg[ F_Y(y_2) - F_Y(y_1) \bigg]}_{P\{y_1 \le Y < y_2\}} = P\{ x_1 \le X < x_2, y_1 \le Y < y_2 \}
+                    $$
+
+                    $X$, $Y$ - независимые
+
+                \item $\Leftarrow$ (достаточность)
+
+                    Пусть
+
+                    $$
+                    P\{ x_1 \le X < x_2, y_1 \le Y < y_2 \} = P\{ x_1 \le X < x_2 \} P\{y_1 \le Y < y_2\} (*)
+                    $$
+
+                    %%%
+                    %%%
+                    %%% ВСТАВИТЬ С ФОТО
+                    %%%
+            \end{enumerate}
+
+        \item Является обобщением свойств 1 и 2 и доказывается аналгично
+
+        \item
+
+            \begin{enumerate}
+                \item $\Leftarrow$ достаточность была доказана выше при рассуждениях между предварительным и полноценным определением
+
+                \item $\Rightarrow$ необходимость доказать самостоятельно
+            \end{enumerate}
+
+        \item
+
+            \begin{enumerate}
+                \item $\Rightarrow$ (необходиость)
+
+                    Пусть $X,Y$ - независимые, то есть $F(x,y) = F_X(x) F_Y(y)$
+
+
+                    тогда
+
+                    $$
+                    f(x,y) = \frac{\partial^2 F(x,y)}{\partial x \partial y} = \frac{\partial^2}{\partial x \partial y} \bigg[ F_X(x) F_Y(y) \bigg] =
+                    $$
+
+                    $$
+                    =
+                    $$
+
+                    %%%
+                    %%%
+                    %%% ВСТАВИТЬ С ФОТО
+                    %%%
+            \end{enumerate}
+    \end{enumerate}
+\end{proof}
+
+\begin{example}
+    Рассмотрим двумерный дискретный случайный вектор из примера выше
+
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{|c||c|c|c||c|}
+            \hline
+            X$\backslash$Y & 1 & 2 & 3 & \\
+            \hline
+            \hline
+            0  & 0 & 0 & $\frac{1}{4}$ & $\frac{1}{4}$ \\
+            \hline
+            1 & $\frac{1}{4}$ & $\frac{1}{4}$ & 0 & $\frac{1}{2}$ \\
+            \hline
+            2 & $\frac{1}{4}$ & 0 & 0 & $\frac{1}{4}$\\
+            \hline
+            \hline
+            & $\frac{1}{2}$ & $\frac{1}{4}$ & $\frac{1}{4}$ & 1\\
+            \hline
+        \end{tabular}
+    \end{table}
+
+    $$
+    P\{(X,Y) - (0,1)\} = 0 \ne \frac{1}{8} = P\{X=0\}P{Y=1}
+    $$
+
+    $\Rightarrow X,Y$ - независимы (свойство 4 $p_{ij} \ne p_ip_j$)
+\end{example}
+
+\begin{defenition}
+    Случайные величины $X_1,...,X_n$ называются попарно независимыми, если $\forall \forall i, j \in \{1,...,n\}, i \ne j \Rightarrow X_i \text{ и } X_j$ - независимы
+
+    - независимы в совокупности, если
+
+    $$
+    F(x_1,...,x_n) \equiv F_{X_1}(x_1) \cdot ... \cdot F_{X_n}(x_n)
+    $$
+
+    где $F$ - функция распределения случайного вектора $(X_1, ..., X_n)$, $F_{X_i}, i = \overline{1;n}$ - маргинальные функции распределения его компонент
+\end{defenition}
+
+\begin{note}
+    Можно доказать, что
+
+    \begin{enumerate}
+        \item если $X_1, ..., X_n$ независимы в совокупности $\Rightarrow$ $X_1, ..., X_n$ - попарно независимы
+
+        \item для случайных величин $X_1, ..., X_n$ будут справедливы обобщения свойств 4 и 5 на случай независимых в совокупности случайных величин.
+    \end{enumerate}
+\end{note}
+
+\subsection{Условные распределения}
+
+Пусть
+
+\begin{enumerate}
+    \item $(X,Y)$ - двумерный случайный вектор
+    \item известно, что случайная велиична $Y$ приняла значение $Y=y_0$
+\end{enumerate}
+
+Вопросы:
+
+\begin{enumerate}
+    \item что в этом случае можно сказать о возможных значениях величины $X$
+    \item что можно сказать о распределении вероятностей между этими возможными значениями случайной величины $X$
+\end{enumerate}
+
+\subsubsection{Случай дискретного случайного вектора}
+
+Пусть
+
+\begin{enumerate}
+    \item $(X,Y)$ - дискретный случайный вектор
+    \item $X \in \{x_1, ..., x_m\}, Y \in \{y_1, ..., y_n\}$
+    \item $p_{ij} = P\{(X,Y) = (x_i, y_j)\}, i = \overline{1;m}, j = \overline{1;n}$
+
+        $p_{x_i} = P\{X=x_i\}, i = \overline{1;m}$
+
+        $p_{y_j} = P\{Y=y_j\}, j = \overline{1;n}$
+
+        $$
+        P\{ X=x_i | Y=y_j\} = \text{определение условной вероятности} = \frac{P\{(X,Y)=(x_i,y_j)\}}{P\{Y = y_j\}} = \frac{p_{ij}}{p_{y_j}}
+        $$
+
+\end{enumerate}
+
+\begin{defenition}
+    Условным распределением компоненты $X$, двумерного дискретного случайного вектора при условии, что случайныя величина $Y=y_j$ называется набор чисел
+
+    $$
+    \pi_{ij} = \frac{p_{ij}}{p_{y_j}}, i = \overline{1;m}
+    $$
+
+    (Для каждого значения $j$ будет свое условное распределение случайной величины $X$, т.к. для каждого $j$ имеет место свое условие $Y=y_i$)
+\end{defenition}
+
+\begin{note}
+    Аналогичным образом опр-ся условное распределение случайной величины $Y$ при условии $X=x_i:$
+
+    $$
+    \tau_{ij} = \frac{p_{ij}}{p_{x_i}}, j = \overline{1;n}
+    $$
+
+    (Для каждого $i \in \{1,...,m\}$ свое условие $\{X=x_i\}$ и свое условное распределение)
+\end{note}
+
+\begin{example}
+    Рассмотрим двумерный случайный вектор из задачи о подбрасывании монеты
+
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{|c||c|c|c||c|}
+            \hline
+            X$\backslash$Y & 1 & 2 & 3 & \\
+            \hline
+            \hline
+            0  & 0 & 0 & $\frac{1}{4}$ & $\frac{1}{4}$ \\
+            \hline
+            1 & $\frac{1}{4}$ & $\frac{1}{4}$ & 0 & $\frac{1}{2}$ \\
+            \hline
+            2 & $\frac{1}{4}$ & 0 & 0 & $\frac{1}{4}$\\
+            \hline
+            \hline
+            & $\frac{1}{2}$ & $\frac{1}{4}$ & $\frac{1}{4}$ & 1\\
+            \hline
+        \end{tabular}
+    \end{table}
+
+    \begin{enumerate}
+        \item Найдем условное распределение случайной величины $X$:
+
+            $$
+            \pi_{ij} = \frac{p_{ij}}{p_{y_j}}
+            $$
+
+            \begin{table}[H]
+                \centering
+                \begin{tabular}{|c||c|c|c|}
+                    \hline
+                    $\pi_{ij}$ & $Y=1$ & $Y=2$ & $Y=3$ \\
+                    \hline
+                    \hline
+                    0  & 0 & 0 & 1 \\
+                    \hline
+                    1 & $\frac{1}{2}$ & 1 & 0 \\
+                    \hline
+                    2 & $\frac{1}{2}$ & 0 & 0 \\
+                    \hline
+                    \hline
+                    & 1 & 1 & 1 \\
+                    \hline
+                \end{tabular}
+            \end{table}
+
+        \item Найдем условное распределение случайной величины $Y$
+
+            $$
+            \tau_{ij} = \frac{p_{ij}}{p_{xi}}, j = \overline{1;3}
+            $$
+
+            \begin{table}[H]
+                \centering
+                \begin{tabular}{|c||c|c|c||c|}
+                    \hline
+                    $\tau_{ij}$ & 1 & 2 & 3 & \\
+                    \hline
+                    \hline
+                    $X=0$  & 0 & 0 & 1 & 1\\
+                    \hline
+                    $X=1$ & $\frac{1}{2}$ & $\frac{1}{2}$ & 0 & 1 \\
+                    \hline
+                    $X=2$ & 1 & 0 & 0 & 1 \\
+                    \hline
+                \end{tabular}
+            \end{table}
+    \end{enumerate}
+\end{example}
+
+\begin{defenition}
+    Пусть $(X,Y)$ - произвольный (не обязательно дискр. или непрерывный) случайный вектор
+
+    Условной функцией распределения случайной величины $X$ при условии, что $Y=y$ называется отображение 
+
+    $$
+    F_X(x|Y=y) = P\{ X < x | Y = y \}
+    $$
+\end{defenition}
+
+\begin{note}
+    \begin{enumerate}
+        \item Условная функция распределения компоненты $Y$ определяется аналогично
+
+            $$
+            F_Y(y|X=x) = P \{Y<y | X=x\}
+            $$
+
+        \item Если $(X,Y)$ - дискретный случайный вектор из пункта 1, то его условная фукция распределения
+
+            $$
+            F_X(x|Y=y_i) = \frac{P\{X<x|Y=y_j\}}{P\{Y=y_j\}} = \frac{\sum_{i < x_i < x} p_{ij}}{p_{y_j}}
+            $$
+    \end{enumerate}
+\end{note}
+
+\subsubsection{Случай непрерывного случайного вектора}
+
+Пусть
+
+\begin{enumerate}
+    \item $(X,Y)$ - непрерывный случайный вектор
+    \item $f(x,y)$ - совместная плотность распределения случайных величин $X,Y$
+\end{enumerate}
+
+В случае непрерывного случайного вектора исользовать формулу (*) в лоб не получится, так как для любого наперед заданного $y$
+
+$$
+P\{Y=y\}=0
+$$
+
+Рассуждения аналогичные рассуждениям, проведенным в пункте 1, приведет к следующему определению
+
+\begin{defenition}
+    Условной плотностью распределения случайной величины $X$ при условии, что $Y=y$ называется функция
+
+    $$
+    f_X(x|Y=y)=\frac{f(x,y)}{f_Y(y)},
+    $$
+
+    $f_Y(y)$ - маргинальная функция плотности распределения случайной величины $Y$, $f_Y(y) \ne 0$
+\end{defenition}
+
+\begin{note}
+    Условная плотность распределения случайной величины $Y$ при условии $X=x$ определяется аналогично
+
+    $$
+    f_X(y|X=x)=\frac{f(x,y)}{f_X(x)},
+    $$
+\end{note}
+
+\begin{theorem}
+    Критерии независимости случайных величин в терминах условных распределений
+
+    \begin{enumerate}
+        \item Пусть $(X,Y)$ - двумерный случайный вектор
+
+            Тогда 3 следующих утверждения эквивалентны
+
+            \begin{enumerate}
+                \item $X$ и $Y$ независимые
+                \item $F_X(x) \equiv F_X(x|Y=y)$ для всех $y$, при которых определена функция $F_X(x|Y=y)$
+                \item $F_Y(y) \equiv F_Y(y|X=x)$ для всех $x$, для которых определена функция $F_Y(y|X=x)$
+            \end{enumerate}
+
+        \item Пусть $(X,Y)$ - дискретный случайный вектор
+
+            Тогда 3 следующих утверждения эквивалентны
+
+            \begin{enumerate}
+                \item $X,Y$ - независимые
+                \item $P\{X=x_i\} \equiv P\{X=x_i|Y=y_j\}$ для всех $y_j$
+                \item $P\{Y=y_j\} \equiv P\{Y=y_j|X=x_i\}$ для всех $x_i$
+            \end{enumerate}
+
+        \item Пусть $(X,Y)$ - непрерывный случайный вектор
+
+            Тогда 3 следующих утверждения эквивалентны
+
+            \begin{enumerate}
+                \item $X,Y$ - независимые
+                \item $f_X(x) \equiv f_X(x|Y=y)$ для всех $y$, для которых определена $f_X(x|Y=y)$
+                \item $f_Y(y) \equiv f_Y(y|X=x)$ для всех $x$, для которых определена $f_Y(y|X=x)$
+            \end{enumerate}
+    \end{enumerate}
+\end{theorem}
+
+\begin{example}
+    Рассмотрим задачу о подбрасывании монеты (см. выше)
+
+    $$
+    \left.
+    \begin{matrix}
+        P\{X=0\} = \frac{1}{4} \\
+        P\{X=0|Y=3\} = 1
+    \end{matrix}
+    \right\}
+    \Rightarrow 1 \ne \frac{1}{4} \Rightarrow X,Y - \text{ независимые}
+    $$
+\end{example}
+
+\section{Функции от случайных величин}
+
+\subsection{Функции от одномерных случайных величин}
+
+Пусть
+
+\begin{enumerate}
+    \item $X$ - случаная величина
+    \item $\varphi : R \to R$
+\end{enumerate}
+
+Рссмотрим $\varphi(X) = Y$ - тоже случайная величина
+
+\begin{example}
+    При изготовлении вала на токарном станке его диаметр $X$ является случайной величиной. Тогда $Y = \pi \frac{X^2}{4}$ - площадь поперечного вала - тоже случайная величина. В этом примере $\varphi(x) = \pi \frac{x^2}{4}$
+\end{example}
+
+\subsubsection{Основной вопрос}
+
+Как, зная закон распределения в $X$ и операцию $\varphi$, найти значение рспределения случайной велиичны $Y=\varphi(X)$?
+
+\begin{enumerate}
+    \item Пусть $X$ - дискретная случайная величина, имеющая, ряд расрпделения
+
+        \begin{table}[H]
+            \centering
+            \begin{tabular}{|c||c|c|c|c|c|}
+                \hline
+                $X$ & $x_1$ & ... & $x_i$ & ... & $x_n$ \\
+                \hline
+                $P$ & $p_1$ & ... & $p_i$ & ... & $p_n$ \\
+                \hline
+            \end{tabular}
+        \end{table}
+
+        $$
+        \sum_{i=1}^n p_i = 1
+        $$
+
+        Пусть $Y=\varphi(X)$
+
+        Случайная величина $Y$ также будет дискретной, так как функция не может принимать значений больше, чем ее аргумент.
+
+        Таким образом, случайная величина $Y$ принимает значения из множества $\varphi(x_i), i = \overline{1;n}$
+
+        \begin{table}[H]
+            \centering
+            \begin{tabular}{|c||c|c|c|c|c|}
+                \hline
+                $Y$ & $\varphi(x_1)$ & ... & $\varphi(x_i)$ & ... & $\varphi(x_n)$ \\
+                \hline
+                $P$ & $p_1$ & ... & $p_i$ & ... & $p_n$ \\
+                \hline
+            \end{tabular}
+        \end{table}
+
+        Если в верхней строке некоторые значения совпадут (то есть $\varphi(x_i) = \varphi(x_j), i \ne j$), то соответствующие столбцы следует объединить, приписав общему значению суммарную вероятность
+\end{enumerate}
+
+\begin{example}
+    $X$ имеет ряд распределения
+
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{|c||c|c|c|}
+            \hline
+            $X$ & -1 & 0 & 1 \\
+            \hline
+            $P$ & 0.2 & 0.7 & 0.1 \\
+            \hline
+        \end{tabular}
+    \end{table}
+
+    Найти ряд распределения случайной величины $Y=X^2 + 1$
+
+    В этом примере $\varphi(x) = x^2 + 1$
+
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{|c||c|c|c|}
+            \hline
+            $Y$ & 2 & 1 & 2 \\
+            \hline
+            $P$ & 0.2 & 0.7 & 0.1 \\
+            \hline
+        \end{tabular}
+    \end{table}
+
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{|c||c|c|}
+            \hline
+            $Y$ & 1 & 2 \\
+            \hline
+            $P$ & 0.7 & 0.3 \\
+            \hline
+        \end{tabular}
+    \end{table}
+\end{example}
+
+\subsubsection{$X$ - непрерывная случайная величина}
+
+\begin{theorem}
+    Пусть
+
+    \begin{enumerate}
+        \item $X$ - непрерывная случайная величина
+        \item $\varphi: R \to R$ - монотонная функция $\Rightarrow \exists \varphi^{-1} = \psi$ - обратная к $\varphi$ функция
+        \item $\varphi$ непрерывна и непрерывно дифференцируемая функция
+        \item $\varphi = \varphi(X)$
+    \end{enumerate}
+
+    Тогда
+
+    случайная величина $Y$ также является непрерывной, причем
+
+    $$
+    f_Y(y) = f_X(\Psi(y)) |\Psi'(y)|,
+    $$
+
+    где $f_X, f_Y$ - функция плотности случайной величны $X$ и $Y$ соответственно
+\end{theorem}
+
+\begin{proof}
+    \begin{enumerate}
+        \item $F_Y(y) = P\{Y<y\} = P\{\varphi(X) < y\}$
+
+            Рассмотрим два случая
+
+            \begin{enumerate}
+                \item $\varphi$ - монотонно возрастающая функция $\Rightarrow \varphi(X) < y \Leftrightarrow X < \varphi^{-1}(y) = \Psi(y)$
+                \item $\varphi$ - монотонно убывающая функция $\Rightarrow \varphi(X) < y \Leftrightarrow X > \Psi(y)$
+            \end{enumerate}
+
+            Тогда 
+
+            \begin{enumerate}
+                \item
+
+                    $$
+                    F_Y(y) = P(X<\Psi(y)) = F_X(\Psi(y))
+                    $$
+
+                \item
+
+                    $$
+                    F_Y(y) = P(X>\Psi(y)) = 1 - P\{X \le \Psi(y)\} = 1 = P\{X < \Psi(y)\} = 1 - F_X(\Psi(y))
+                    $$
+            \end{enumerate}
+            %%
+            %%
+            %% ПРОДОЛЖЕНИЕ НА ФОТО
+            %%
+    \end{enumerate}
+\end{proof}
+
+\begin{example}
+    Пусть
+
+    \begin{enumerate}
+        \item $X$ - непрерывная случайная величина
+        \item $F(x)$ - функция распрееления случайной величины $X$ непрерывна
+    \end{enumerate}
+
+    Найдем закон распрееления случайной величины $Y=F(X)$ (то есть $\varphi = F$)
+
+    \begin{enumerate}
+        \item Очевидно, что $Y \in [0;1]$
+
+        Это означает, что
+
+        \begin{enumerate}
+            \item $F_Y(y) = 0$, если $y \le 0$
+            \item $F_Y(y) = 1$, если $y > 1$
+            \item $y \in (0;1] \Rightarrow$
+
+                $$
+                F_Y(y) = \underbrace{F}_{F_X} (\underbrace{F^{-1}}_{\varphi^{-1}}(y)) = y
+                $$
+        \end{enumerate}
+
+        Таким образом
+
+        $$
+        F_Y(y) =
+        \begin{cases}
+            0, y \le 0 \\
+            y, 0 < y \le 1 \\
+            1, y > 1 \\
+        \end{cases}
+        $$
+
+        Тогда
+
+        $$
+        f_Y(y) = \frac{d}{dy} F_Y(y) =
+        \begin{cases}
+            1, y \in [0;1] \\
+            0, \text{ иначе} \\
+        \end{cases}
+        $$
+
+        Таким образом
+
+        $$
+        Y \sim R[0;1] \text{ - равномерное распределение на } [0;1] \text{ случайной величины}
+        $$
+    \end{enumerate}
+\end{example}
+
+\begin{note}
+    Из предыдущего примера следует, что если $Y \sim R[0;1]$, то случайная величина $X = F^{-1}(Y)$ будет иметь функцию $F$ своей функцией распределения.
+
+    Этот факт широко используется при моделировании случайных величин: достаточно иметь генератор случайных чисел для $R[0;1]$, тогда для генерирования значений случайной величины $X$ с непрерывной функцией распределения $F(x)$ достаточно подвергнуть выборку из $R[0;1]$ к функциональному преобразованию $F^{-1}$.
+\end{note}
+
+\begin{theorem}
+    Случай монотонной функции $\varphi$
+
+    Пусть
+
+    \begin{enumerate}
+        \item $X$ - непрерывная случайная величина
+        \item $f_X$ - функция плотности непрерывной случайной величины $X$
+        \item $\varphi : R \to R$ имеет $n$ интервалов монотонности (то есть $\varphi$ является кусочно-монотонной)
+        \item $\varphi$ дифференцируема
+        \item для данного $y \in R$
+
+            $$
+            v_1 = \Psi_1(y), ..., x_k = \Psi_k(y)
+            $$
+
+            все решения уранения $\varphi(x) = y$
+
+            При этом $\Psi_1(t),...,Y_k(t)$ - функции, обратные к $\varphi(x)$ на интервалах монотонности, которым принадлежат $x_1,...,x_k$ соответсвенно.
+
+        \item $Y = \varphi(X)$
+    \end{enumerate}
+
+    Тогда
+
+    $$
+    f_Y(y) = \sum_{j=1}^k f_X(\Psi_j(y))|\Psi'_j(y)|
+    $$
+\end{theorem}
+
+\begin{proof}
+    Без доказательства
+\end{proof}
+
+\subsection{Скалярная функция от случайного вектора}
+
+Пусть
+
+\begin{enumerate}
+    \item $\vec X = (X_1, ..., X_n)$ - случайный вектор
+    \item $\varphi : R^n \to R$
+\end{enumerate}
+
+Тогда
+
+$$
+Y = \varphi(X_1,...,X_n) \text{ - скалярная случайная величина}
+$$
+
+Вопрос: как, зная закон распределения вектора $\vec X$ и функцию $\varphi$, найти закон распределения случайного вектора $Y$?
+
+\begin{example}
+    Пусть $(X_1, X-2)$ - координаты точки попадания пули при стрельбе по плоской мишени
+
+    Тогда
+
+    $$
+    Y = \sqrt{X_1^2 + X_2^2} \text{ - расстояние от точки попадания до центра мишени}
+    $$
+
+    (здесь $\varphi(x_1, x_2) = \sqrt{x_1^2 + x_2^2}$)
+\end{example}
+
+Далее ограничимся $n=2$
+
+\begin{enumerate}
+    \item[I] Если $(X_1, X_2)$ - дискретный случайный вектор, закон распределения которого задан таблицей
+
+        \begin{table}[H]
+            \centering
+            \begin{tabular}{|c||c|c|c|}
+                \hline
+                $X_1 \backslash X_2$ & ... & $x_{2,j}$ & ... \\
+                \hline
+                \hline
+                $\vdots$ &  ... & ... & ... \\
+                \hline
+                $x_{1,i}$ & ... & $p_{ij}$ & ... \\
+                \hline
+                $\vdots$ &  ... & ... & ... \\
+                \hline
+            \end{tabular}
+        \end{table}
+
+        Тогда
+
+        $$
+        Y = \varphi(X_1, X_2) \text{ - дискретная случайная величина, принимающая значения } \varphi(x_{1,i}, x_{2,j}), i = \overline{1;m}, j = \overline{1;n}
+        $$
+\end{enumerate}
+
+\begin{example}
+    %%
+    %%
+    %%
+\end{example}
+
+\begin{enumerate}
+    \item[II] Если $(X_1, X_2)$ - непрерывный случайный вектор, а $\varphi : R^2 \to R$ - непрерывная функция
+
+        Тогда случайная величина 
+
+        $$
+        Y=\varphi(X_1, X_2)
+        $$
+
+        также будет непрерывной, причем значение функции распределения случайной величины $Y$ можно найти по формуле:
+
+        $$
+        F_Y(y_0) = \iint_{D(y_0)} f(x_1,x_2) dx_1dx_2,
+        $$
+
+        где $f$ - функция плотности распределения вектора $(X_1, X_2)$, $D(y_0) = \{(x_1, x_2) : \varphi(x_1,x_2) < y\}$
+
+        Обоснование формулы
+
+        $$
+        F_Y(y_0) = P\{Y<y_0\} = P\{\varphi(X_1, X_2) < y_0\} =
+        $$
+
+        события $\varphi(X_1,X_2) < y_0$ и $(X_1,X_2) \in D(y_0)$ эквивалентны, поэтому
+
+        $$
+        = P \{ (X_1,X_2) \in D(y_0)\} = \iint_{D(y_0)} f(x_1, x_2) dx_1dx_2
+        $$
+\end{enumerate}
+
+\begin{example}
+    Пусть
+
+    \begin{enumerate}
+        \item $(X_1, X_2)$ - координаты точки попадания пули при стрельбе по полной мишени 
+        \item $(X_1,X_2) sim R(K)$, где ($K$ - круг радиуса $r$)
+        \item $Y=\sqrt{X_1^2 + X_2^2}$ - расстояние от точки попадания до центра мишени
+    \end{enumerate}
+
+    Найти закон распределения вектора $Y$
+
+    Решение:
+
+    \begin{enumerate}
+        \item
+
+            $$
+            f(x_1, x_2) =
+            \left\{
+                \begin{matrix}
+                    c, (x_1, x_2) \in K \\
+                    0, \text{иначе} \\
+                \end{matrix}
+            \right\}
+            $$
+
+            $$
+            1 = \iint_{R_2} f(x_1,x_2)dx_1dx_2 = \iint_K cdx_1dx_2 = c \cdot \pi r^2
+            $$
+
+            $$
+            f(x_1,x_2) =
+            \begin{cases}
+                \frac{1}{\pi r^2}, (x_1,x_2) \in K \\
+                0, \text{ иначе} \\
+            \end{cases}
+            $$
+
+        \item
+
+            $$
+            \varphi(x_1,x_2) = \sqrt{x_1^2 + x_2^2}
+            $$
+
+        \item
+
+            $$
+            F_Y(y_0) = \iint_{D(y_0)} f(x_1,x_2) dx_2dx_2
+            $$
+            %%
+            %%
+            %%
+            %%
+            %%
+            %%
+    \end{enumerate}
+\end{example}
+
+\subsection{Формула свертки}
+
+рассмотрим частный случай функции преобразования случайного вектора $(X_1, X_2)$
+
+\begin{theorem}
+    Пусть
+
+    \begin{enumerate}
+        \item $X_1,X_2$ - непреывные случайные величины
+        \item $X_1,X_2$ - независимы
+        \item $Y=X_1+X_2$
+    \end{enumerate}
+
+    Тогда
+
+    $$
+    f_Y(y) = \int_{-\infty}^{+\infty} f_{X_1}(y-x) f_{X_2}(x)dx_1
+    $$
+\end{theorem}
+
+\begin{proof}
+    \begin{enumerate}
+        \item
+
+            $$
+            F_Y(y) = \iint_{D(y)} f(x_1, x_2) dx_1dx_2 =
+            $$
+
+            $$
+            D(y) = \{ (x_1,x_2) : \underbrace{x_1 + x_2}_{\varphi(x_1,x_2)} < y \}
+            $$
+
+            $$
+            = \int_{-\infty}^{+\infty} dx_2 \int_{-\infty}^{y - x_2} f(x_1, x_2) dx_1
+            $$
+            %%
+            %%
+            %%
+            %%
+            %%
+    \end{enumerate}
+\end{proof}
+
+\begin{note}
+    \begin{enumerate}
+    \item Пусть $f,g : R \to R$
+
+    \begin{defenition}
+        Сверточной функцией $f$ и $g$ называется функция
+
+        $$
+        (f*g)(y) = \int_{-\infty}^{+\infty} f(y-x) g(x0 dx, y \in R
+        $$
+    \end{defenition}
+
+\item Очевидно, что свертка коммутативна, то есть
+
+    $$
+    f*g = g*f
+    $$
+    \end{enumerate}
+\end{note}
+
+\subsection{Математические ыожидания и дисперсия некоторой случайной величины}
+
+\begin{enumerate}
+    \item $X \sim B(n,p)$
+    \item $X \sim \Pi(\lambda)$
+    \item Геометрическое распределение. Пусть $X$ имеет геометрическое распределение с параметром $p \in (0;1)$, т.е. $P\{ X = k \} = pq^k, k = 0,1,2,...$
+
+        Тогда можно показать, что
+
+        $$
+        MX = \frac{q}{p}
+        $$
+
+        $$
+        DX = \frac{q}{p^2}
+        $$
+
+    \item Равномерно распределенная случайная величина
+
+        $$
+        X \sim R[a;b]
+        $$
+
+        $$
+        f(x) =
+        \begin{cases}
+            \frac{1}{b-a}, x \in [a,b] \\
+            0, \text{ иначе} \\
+        \end{cases}
+        k = 0,1,2,...
+        $$
+
+        $$
+        M[X] = \int_{-\infty}^{+\infty} xf(x)dx = \frac{a+b}{2}
+        $$
+
+        $$
+        DX = M \bigg[ (X -MX^2) \bigg] = \int_{-\infty}^{+\infty} (x - \frac{a+b}{2})^2 dx = \frac{(b-a)^2}{12}
+        $$
+
+    \item Экспоненциальное распределение
+
+        $$
+        X \sim Exp(\lambda)
+        $$
+
+        $$
+        f(x) =
+        \begin{cases}
+            \lambda e^{-\lambda x}, x > 0 \\
+            0, x < 0
+        \end{cases}
+        $$
+
+        $$
+        MX = \int_{-\infty}^{+\infty} xf(x)dx = ... = -\frac{1}{\lambda}
+        $$
+
+        $$
+        DX = M[X^2] - (MX)^2;
+        $$
+
+        $$
+        M[X^2] = \int_{-\infty}^{+\infty} x^2 f(x) dx = ... = \frac{2}{\lambda^2}
+        $$
+
+        Тогда
+
+        $$
+        DX = \frac{2}{\lambda^2} - \bigg( \frac{1}{\lambda} \bigg) = \frac{1}{\lambda^2}
+        $$
+
+    \item Нормальное распределение
+
+        $$
+        X \sim N(m, \sigma^2)
+        $$
+
+        $$
+        f(x) = \frac{1}{\sqrt{2 \pi} \sigma} e^{-\frac{(x-m)^2}{2\sigma^2}}, x \in R
+        $$
+
+        $$
+        MX = \int_{-\infty}^{+\infty} xf(x)dx = \frac{1}{\sqrt{2\pi}\sigma} \int_{-\infty}^{+\infty} x e^{-\frac{(x-m)^2}{2\sigma^2}}dx = ... = \frac{1}{\sqrt{2\pi}} \bigg[ \sigma \int_{-\infty}^{+\infty} t e^{-\frac{t^2}{2}}dt + m \int_{-\infty}^{+\infty} e^{-\frac{t^2}{2}}dt \bigg] =
+        $$
+
+        $$
+        = m \cdot \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{+\infty} e^{-\frac{t^2}{2}} dt = m
+        $$
+
+        $$
+        DX = M[(X - MX)^2] = \int_{-\infty}^{+\infty} (x-m)^2 f(x) dx = \frac{1}{\sqrt{2\pi} \sigma} \int_{-\infty}^{+\infty} (x-m)^2 e^{-\frac{(x-m)^2}{2\sigma^2}} dx =
+        $$
+
+        $$
+        \frac{1}{\sqrt{2\pi}\sigma} \sigma \sigma^2 \int_{-\infty}^{+\infty} t^2 e^{-\frac{t^2}{2}} dt = ... = -\frac{\sigma^2}{\sqrt{2\pi}} \bigg[ t \cdot e^{-\frac{t^2}{2}}|_{-\infty}^{+\infty} - \int_{-\infty}^{+\infty} e^{-\frac{t^2}{2}}dt \bigg] = \sigma^2
+        $$
+
+        Таким образом если $X \sim N(m, \sigma^2)$, то $m=MX$, $\sigma^2 = DX$
+\end{enumerate}
+
+\subsection{Моменты}
+
+\begin{defenition}
+    Пусть $X$ - случайная величина
+
+    Моментом $k$-го порядка ($k$-м моментом, $k$-м начальным моментом) случайной величины $X$ называют число
+
+    $$
+    m_k = M[X^k], (k=1,2,...)
+    $$
+\end{defenition}
+
+\begin{defenition}
+    Центральным моментом $k$-го порядка случайной величины $X$ называют число
+
+    $$
+    \overset{o}{m_k} = M[(X-m)^k], (k=1,2,...)
+    $$
+    где $m=MX_0$
+\end{defenition}
+
+\begin{note}
+    \begin{enumerate}
+        \item если $X$ - дискретная случайная величина, то
+
+            $$
+            m_k = \sum_i p_ix_i^x
+            $$
+
+            $$
+            \overset{o}{m_k} = \sum_i p_i(x_i-m)^k
+            $$
+
+        \item если $X$ - непрерывная случайная величина, то
+
+            $$
+            m_k = \int_{-\infty}^{+\infty} x^k f(x) dx
+            $$
+
+            $$
+            \overset{o}{m_k} = \int_{-\infty}^{+\infty} (x-m)^k f(x) dx
+            $$
+
+        \item
+
+            $$
+            m_1 = MX
+            $$
+
+            $$
+            \overset{0}{m_2} = DX
+            $$
+
+            $$
+            \overset{0}{m_1} = 0
+            $$
+    \end{enumerate}
+\end{note}
+
+\subsection{Квантиль}
+
+\begin{defenition}
+    Пусть $X$ - случайаня величина, $\alpha \in (0;1)$
+
+    Квантилью уровня $\alpha$ случайной величины $X$ называется число $q_\alpha$, определяемое условиями
+
+    $$
+    P\{X<q_\alpha\} \le \alpha, P\{ X > q_\alpha \} \le 1 - \alpha
+    $$
+\end{defenition}
+
+\begin{note}
+    \begin{enumerate}
+    \item Если $X$ - непрерывная случайная величина, то $\forall \alpha \in (0;1)$ квантиль уровня $\alpha$ определена однозначно и является решением уравнения
+
+        $$
+        F_X(t) = \alpha
+        $$
+    \end{enumerate}
+\end{note}
+
+\begin{defenition}
+    Медианой случайной величины $X$ называется квантиль уровня $\frac{1}{2}$, то есть $q_{\frac{1}{2}}$
+\end{defenition}
+
+\begin{example}
+    Пусть $X \sim Exp(\lambda)$. Найти $q_\alpha$ и медиану.
+
+    $$
+    \int_{-\infty}^{q_\alpha} f(x) dx = \alpha \Leftrightarrow \lambda \int_0^{q_\alpha} e^{-\lambda x} dx = \alpha
+    $$
+
+    $$
+    \alpha = \lambda \int_{0}^{q_\alpha} e^{-\lambda x} dx = (1-e^{-\lambda q_\alpha})
+    $$
+
+    $$
+    \Rightarrow e^{-\lambda q_\alpha} = 1 - \alpha \Rightarrow q_\alpha = \frac{-\ln(1-\alpha)}{\lambda}
+    $$
+
+    Медиана:
+
+    $$
+    q_{\frac{1}{2}} = -\frac{\ln2}{\lambda}
+    $$
+\end{example}
+
+\subsection{Ковариация}
+
+До сих пор мы изучали числовые характеристики одномерного случайной величиной. Ковариация является характеристикой случайного вектора
+
+\begin{defenition}
+    Пусть $(X,Y)$ - двумерный случайный вектор
+
+    Ковариацией случайных величин $X$ и $Y$ называют число
+
+    $$
+    cov(X,Y) = M[(X-m_1)(Y-m_2)]
+    $$
+
+    где $m_1 = MX$, $m_2 = MY$
+\end{defenition}
+
+\begin{note}
+    \begin{enumerate}
+        \item если $(X,Y)$ - дискретный случайный вектор, то
+
+            $$
+            cov(X,Y) = \sum_i \sum_j p_{ij} (x_i - m_1)(y_j - m_2)
+            $$
+
+            где $p_{ij} = P\{ (X,Y) = (x_i, y_j) \}$
+
+        \item если $(X,Y)$ - непрерывный случайный вектор, то
+
+            $$
+            cov(X,Y) = \iint_{R^2} (x-m_1)(y-m_2)f(x,y)dxdy
+            $$
+
+            где $f(x,y)$ - совместная плотность распределения $X$ и $Y$
+    \end{enumerate}
+\end{note}
+
+\subsubsection{Свойства ковареляции}
+
+\begin{enumerate}
+    \item $D(X+Y) = DX + DY + 2cov(X,Y)$
+    \item $cov(X,X) = DX$
+    \item Если $X,Y$ - независимые, то $cov(X,Y) = 0$
+    \item $cov(a_1 X + a_2, b_1 Y + b_2) = a_1b_1 cov(X,Y)$
+    \item $|cov(X,Y)| \le \sqrt{DX \cdot DY}$, причем
+
+        $$
+        |cov(X,Y)| = \sqrt{DX \cdot DY} \Rightarrow
+        $$
+
+        $X,Y$ - связаны линейной зависимостью, то есть $Y=aX+b, a,b-=const$
+
+    \item $cov(X,Y) = M[XY] - (MX)\cdot(MY)$
+\end{enumerate}
+
+
+\begin{proof}
+    См. фото
+\end{proof}
+
+\begin{note}
+    \begin{enumerate}
+        \item Свойствов 1 с учетом 4 допускает обобщение
+
+            $$
+            D[aX+bY+c] = a^2 DX + b^2 DY + 2ab cov(X,Y)
+            $$
+
+        \item Рассмотрим свойство 5
+
+            Пусть $Y=aX+b$, тогда в соответствии со свойством 4
+
+            $$
+            cov(X,Y) = cov(X, aX+b) = a \cdot cov(X,X) = a DX
+            $$
+
+            Если $DX >0$, то знак $(cov(X,Y)) = \text{знак}(a)$
+
+            Таким образом, свойство 5 можно уточнить:
+
+            Если $Y = aX+b$, то
+
+            $$
+            cov(X,Y) =
+            \begin{cases}
+                \sqrt{DX \cdot DY}, \text{ если } a > 0 \\
+                -\sqrt{DX \cdot DY}, \text{ если } a < 0 \\
+            \end{cases}
+            $$
+    \end{enumerate}
+\end{note}
+
+\begin{defenition}
+    Случайные величины $X$ и $Y$ называются некоррелированными, если
+
+    $$
+    cov(X,Y) = 0
+    $$
+\end{defenition}
+
+\begin{note}
+    Из свойства 3 вытекает, что $X,Y$ - независимы $\Rightarrow$ $X,Y$ - некоррелированы. Обратное неверно.
+\end{note}
+
+\begin{note}
+    Недостатком ковариации является то, что она имеет размерность произведения случайных величин $X$ и $Y$. В то же самое время удобно иметь некоторую безразмерную характеристику.
+\end{note}
+
+\begin{defenition}
+    Коэффициентом корреляции случайных величин $X$ и $Y$ называется число
+
+    $$
+    \rho(X,Y) = \frac{cov(X,Y)}{\sqrt{DX \cdot DY}}
+    $$
+
+    (здесь предполагается, что $DX \cdot DY > 0$)
+\end{defenition}
+
+\subsubsection{Свойства коэффициента корреляции}
+
+\begin{enumerate}
+    \item $\rho(X,X) = 1$
+    \item Если $X,Y$ - независимые, то $\rho(X,Y) = 0$
+    \item $\rho(a_1X + a_2, b_1 Y + b_2) = \pm\rho(X,Y)$
+
+        где $+$, если $a_1a_2 > 0$, -, если $a_1 a_2 < 0$
+
+    \item $|\rho(X,Y)| \le 1$, причем $|\rho(X,Y) = 1| \Rightarrow$ $X$ и $Y$ связано линейной зависимостью $Y=aX+b$
+
+        При этом
+
+        $$
+        \rho(X,Y) =
+        \begin{cases}
+            1, \text{ если } a > 0 \\
+            -1, \text{ если } a< 0 \\
+        \end{cases}
+        $$
+\end{enumerate}
+
+\begin{note}
+    Коээфициент корреляции показывает степень линейной зависимости случайных величин $X$ и $Y$. Пусть проведено достаточно много экспериментов и все реализации вектора $(X,Y)$ изображены на плоскости. Чем ближе эти реализации группируются около некоторой прямой, тоем ближе $|\rho|$ к $1$. Если все эти значения лежат на одной прямой, то $|\rho| = 1$. При этом если соответствующая прямая имеет положительный угловой коэффициент, то $\rho > 0$ и $\rho \lesssim 1$. Если она имеет отрицательный угловой коэффициент, то $\rho < 0$ и $\rho \gtrsim -1$.
+\end{note}
+
+\begin{defenition}
+    Пусть $\vec X = (X_1, ..., X_n)$ - $n$- мерный случайный вектор
+
+    Ковариацинной матрицей вектора $\vec X$ называется матрица
+
+    $$
+    \sum = (\sigma_{ij})_{ij=\overline{1;n}}
+    $$
+
+    где $\sigma_{ij} = cov(X_i, X_j)$
+\end{defenition}
+
+\begin{note}
+    \begin{enumerate}
+        \item $\sigma_{ii} = DX_, i = \overline{1;n}i$
+        \item $\sum^T = \sum$, так как $cov(X_i, X_j) = cov(X_j, X_i)$
+        \item Если $\vec Y = \vec X B + \vec C$
+
+            где $B \in M_{n,m}(R), \vec X = (X_1, ..., X_n), \vec Y + (Y_1, .., Y_m), \vec C = (C_1, ..., C_m), (B, \vec C - \text{ числовые матрицы})$, то
+
+            $$
+            \sum\ _{\vec Y} = B^T \sum\ _{\vec X} B
+            $$
+
+        \item Матрица $\sum$ является неотрицательно определенной (то есть соответствующая квадратичная форма является неотрицательно определенной), то есть
+
+            $$
+            \forall \vec x = (x_1, ..., x_n) \in R
+            $$
+
+            $$
+            f(\vec x) = \vec x \sum \vec x^T \geq 0
+            $$
+
+        \item Если все компоненты случайного вектора $\vec X$ попарно независимы, то его ковариационная матрица является диагональной, так как $cov(X_i, X_j) = 0$
+    \end{enumerate}
+\end{note}
+
+\begin{proof}
+    Без доказательства
+\end{proof}
+
+\begin{defenition}
+    Корреляционной матрицей вектора $\vec X$ называется матрица
+
+    $$
+    P = (\rho_{ij})_{ij = \overline{1;n}}
+    $$
+
+    где $\rho_{ij} = \rho(X_i, X_j)$
+\end{defenition}
+
+\section{Многомерное нормальное распределение}
+
+\subsection{Двумерное нормальное распределение}
+
+Рассмотрим
+
+\begin{enumerate}
+    \item $X_1 \sim N(m_1, \sigma_1^2)$
+    \item $X_2 \sim N(m_2, \sigma_2^2)$
+    \item $X_1, X_2$ - независимы
+\end{enumerate}
+
+Тогда
+
+$$
+F_{X_i} (x_i) = \frac{1}{\sqrt(2\pi)\sigma_i} e^{-\frac{(x_i-m_i)^2}{2 \sigma_i^2}}
+$$
+
+При этом функция плотности вектора $(X_1, X_2)$:
+
+$$
+f(x_1, x_2) = f_{X_1}(x_1)f_{X_2}(x_2) = \frac{1}{(\sqrt{2\pi})^2 \sigma_1 \sigma_2} e^{-\frac{1}{2} \big[ \frac{(x_1-m_1)^2}{\sigma_1^2} + \frac{(x_2-m_2)^2}{\sigma_2^2} \big]}
+$$
+
+Для вектора $(X_1,X_2)$:
+
+$\vec m = (m_1, m_2)$ явдяется вектором математических ожиданий,
+
+$$
+\sum =
+\left[
+    \begin{matrix}
+        \sigma_1^2 & 0 \\
+        0 & \sigma_2^2 \\
+    \end{matrix}
+\right]
+\text{ - ковариационная матрица}
+$$
+
+С учетом этих обозначений:
+
+$$
+f(x_1, x_2) = \frac{1}{(\sqrt{2\pi})^2 \sqrt{det} \sum} e^{-\frac{1}{2} (\vec x - \vec m) \tilde \sum (\vec x - \vec m)^T}
+$$
+
+где $\vec x = (x_1, x_2)$
+
+$$
+\tilde \sum = \sum\ ^{-1}
+$$
+
+Пусть теперь: $\sum$ - произвольная матрица 2-го порядка. Для того, чтобы $\sum$ была ковариационной матрицей некоторого случайного вектора, необходимо:
+
+\begin{enumerate}
+    \item $\sum$ была положительно (неотицательно) определена
+    \item $\sum\ ^T = \sum$
+\end{enumerate}
+
+Если
+
+$$
+\sum =
+\left[
+    \begin{matrix}
+        \sigma_{11} & \sigma_{12} \\
+        \sigma_{21} & \sigma_{22} \\
+    \end{matrix}
+\right]
+$$
+
+то эти условия имеют вид
+
+\begin{enumerate}
+    \item $\sigma_{11} \geq 0, \sigma_{11} \sigma_{22} - \sigma_{21} \sigma_{12} \geq 0$
+    \item $\sigma_{12} = \sigma_{21}$
+\end{enumerate}
+
+Наложим на $\sum$ несколько дополнительных ограничений
+
+\begin{enumerate}
+    \item Чтобы существовал $\sum\ ^{-1}$ необходимо и достаточно, чтобы $det \sum \ne 0$; с учетом сделанного выше допущения:
+
+        $$
+        det \sum > 0
+        $$
+
+        то есть $\sigma_{11}\sigma_{22} - \sigma_{12}^2 > 0$
+
+    \item Если $\sigma_{22} = 0$, то $DX_2 = 0 \Rightarrow X_2$ принимает единственное значение с вероятностью 1 (то есть $X_2$ не является случайной величиной) $\Rightarrow$ распределение $X_2$ - выроженное
+
+        По этой причине будем считать, что
+
+        $$
+        \sigma_{22} > 0
+        $$
+
+        Таком образом с учетом сделанных выше допущений матрица $\sum$ является положительно определенной
+\end{enumerate}
+
+\begin{defenition}
+    Говорят, что случайный вектор $(X_1, X_2)$ имеет невырожденное двумерное нормальное распределение, если его функция плотности имеет вид
+
+    $$
+    f(x_1, x_2) = ...
+    $$
+
+    где ...
+\end{defenition}
+
+\begin{note}
+    \begin{enumerate}
+        \item Можно показать, что в этом случае
+
+            $$
+            m_i = MX_i, i = \overline{1;2}
+            $$
+
+            $$
+            \sigma_{ii} = DX_i, i = \overline{1;2}
+            $$
+
+            $$
+            \sigma_{12} = cov(X_1, X_2)
+            $$
+
+        \item Таким образом двумерное нормальное распределение полностью задается 5-ю параметрами: $m_1, m_2, \sigma_{11}, \sigma_{22}, \sigma_{12}$
+    \end{enumerate}
+\end{note}
+
+\subsection{$n$-мерное нормально распределение}
+
+\begin{defenition}
+    Говорят, что случайный вектор $\vec X = (X_1, ..., X_n)$ имеет $n$-мерное нормальное распределение, если его плотности имеет вид:
+
+    $$
+    ...
+    $$
+    %%
+    %%
+    %%
+    %%
+\end{defenition}
+
+\begin{note}
+    Обозначается $\tilde X \sim N(\vec m, \sum)$
+\end{note}
+
+\subsubsection{Свойства $n$-мерного нормального распределения}
+
+\begin{enumerate}
+    \item Если $\tilde X \sim N(\vec m, \sum)$, то $\vec m$ - вектор ожиданий вектора $\vec X$, $\sum$ - ковариационная матрица
+
+    \item Если $\vec X \sim N(\vec m, \sum)$, то $X_i \sim N(m_i, \sigma_i^2), i = \overline{1;n}$, где $\sigma_i^2 = \sigma_{ii}$
+
+    \item Если
+
+        \begin{enumerate}
+            \item $\vec X \sim N(\vec m, \sum)$
+            \item $\sum$ - диагональная матрица
+        \end{enumerate}
+
+        то случайные величины $X_1, ..., X_n$ независимы (в совокупности)
+
+        \begin{note}
+            Таким образом для нормальных случайных величин из некоррелированности $\Rightarrow$ независимость (Для сл. вел. <<вообще>> это свойство неверно)
+        \end{note}
+
+    \item Пусть
+
+        \begin{enumerate}
+            \item $\vec X \sim N(\vec m, \sum)$
+            \item $\vec X = (X_1, ..., X_n)$
+
+                $\vec m = (m_1,..., m_n)$
+
+            \item
+
+                $$
+                \sum =
+                \left[
+                    \begin{matrix}
+                        \sigma_{11} & \cdots & \sigma_{1n} \\
+                        \vdots & \ddots & \vdots \\
+                        \sigma_{1n} & \cdots & \sigma_{nn} \\
+                    \end{matrix}
+                \right]
+                $$
+        \end{enumerate}
+
+        Тогда
+
+        $$
+        \vec X' = (X_1,...,X_{n-1})
+        $$
+
+        будет иметь распределение $N(\vec m', \sum')$
+
+    \item Пусть
+
+        \begin{enumerate}
+            \item $\vec X \sim N(\vec m, \sum)$
+            \item $Y = \lambda, X_1 + ... + \lambda_nX_n + \lambda_0$, где $\lambda_j \in R, j = \overline{0;n}$
+        \end{enumerate}
+
+        Тогда $Y$ имеет нормальное распределение
+
+    \item ...
+\end{enumerate}
+
+\begin{example}
+    ...
+\end{example}
+
+\end{document}
