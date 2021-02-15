@@ -1,0 +1,38 @@
+\section{Лабораторные работы}
+
+\subsection{Лабораторная работа 1}
+
+Одноканальная система обслуживания.
+
+Генератор $\rightarrow$ Буфер $\rightarrow$ Обслуживающий аппарат $\rightarrow$
+
+Задан закон распределения поступления заявок ($\lambda$). Задан закон распределения времени обслуживания заявок ($\overline{t}_\text{обсл}$). Интервал прихода заявок.
+
+\begin{equation*}
+    t_\text{прихода} = \frac{1}{\lambda}
+\end{equation*}
+
+Пользователя интересует
+
+\begin{equation*}
+    \overline{t}_\text{пребывания} = \overline{t}_\text{ожидания} + \overline{t}_\text{обслуживания}
+\end{equation*}
+
+$\rho$ -- загрузка $\rho = \frac{\lambda}{\mu}$, $\lambda$ -- интенсивность поступления заявок, $\mu$ -- интесивность обслуживания заявок.
+
+\begin{equation*}
+    F = 1 - e^{-\lambda t}
+\end{equation*}
+
+\begin{equation*}
+    F = 1 - e^{-\mu t}
+\end{equation*}
+
+\begin{enumerate}
+    \item Пересчитать параметры заданого закона распределения таким образом, чтобы пользователь работал с интенсивностями.
+    \item Построить график зависимости $\rho$ от среднего времени пребывания или ожидания.
+\end{enumerate}
+
+\begin{equation*}
+    \overline{t}_\text{ож} = \frac{\rho}{(1 - \rho) \lambda}
+\end{equation*}
