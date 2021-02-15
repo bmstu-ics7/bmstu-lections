@@ -1,0 +1,27 @@
+\section{Введение}
+
+Выделяют 3 модели нейронов:
+
+\begin{enumerate}
+    \item \textbf{Физиологические} -- нас не интересуют, понять как работает нейрон
+    \item \textbf{Феноменологические} -- не рассмтариваем, они для биологов
+    \item \textbf{Формальный нейрон} -- будем заниматься ими, математическая модель, попытка ее создать, не отражает работу физического нейрона.
+\end{enumerate}
+
+\subsection{Модель МакКалака Питтса}
+
+\begin{equation*}
+    y = \phi(\nu) = \frac{1}{1 + e^{-\alpha \nu}}
+\end{equation*}
+
+\begin{equation*}
+    y = \th(\nu) = \frac{1 - e^{-2\alpha\nu}}{1 + e^{-2\alpha\nu}}
+\end{equation*}
+
+\begin{equation*}
+    \frac{d \varphi}{d \nu} = \alpha \varphi(\nu)(1 - \varphi(\nu))
+\end{equation*}
+
+\begin{equation*}
+    \frac{d \varphi}{d \nu} = \alpha (1 - \varphi^2(\nu))
+\end{equation*}
