@@ -1,0 +1,66 @@
+\section{Персональные данные}
+
+152 ФЗ регламентирует доступ к персоналным данным
+
+\begin{itemize}
+    \item Общедоступные источники персональных данных (ПДн) -- все сведения, которые мы храним, они взяты из открытых источников.
+    \item Специальные ПДн -- расовые, религиозные, медицинские.
+    \item Биометрические ПДн.
+    \item Трансграничкая передача ПДн.
+\end{itemize}
+
+\subsection{Методы защиты от нелегального копирования}
+
+\begin{itemize}
+    \item внутренняя самозащита;
+    \item ограничения по сроку;
+    \item аутентификация / авторизация;
+    \item нарушение штатного функционала;
+    \item вирусы;
+    \item аппаратные средства;
+    \item изменение формата записи (хранения);
+    \item собственная защита программного обеспечения.
+\end{itemize}
+
+\textbf{Виды параметров}
+
+\begin{itemize}
+    \item постоянные;
+    \item изменяемые.
+\end{itemize}
+
+\textbf{Критерии выбора параметра}
+
+\begin{itemize}
+    \item уникаьность;
+    \item неизменность;
+    \item доступность.
+\end{itemize}
+
+\begin{lbox}{\textbf{ЛР1 защита информации от копирования}}
+    \begin{itemize}
+        \item Написать программу, она не может запуститься на компьютере;
+        \item После запуска инсталлера, программа привязывается к компьютеру с помощью уникальных параметров и может запуститься;
+        \item На другом компьютере не может запуститься, пока не запустить инсталлер.
+    \end{itemize}
+
+    \begin{enumerate}
+        \item Win API (get current hardware profile)
+        \item WMI (Windows Management Instrumentation) -> WQL
+
+            \begin{itemize}
+                \item Win32\_Processor
+                \item Win32\_BIOS
+                \item Win32\_DiskDrive
+                \item Win32\_LogicalDisk
+            \end{itemize}
+
+        \item wmic
+        \item cat /proc/cpuinfo, /diskstats, /partiton
+        \item sysctl -- MAC
+        \item stsctl conf
+        \item sysctl hw
+        \item ioreg
+        \item dmidocode
+    \end{enumerate}
+\end{lbox}

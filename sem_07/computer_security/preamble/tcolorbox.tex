@@ -1,0 +1,11 @@
+\usepackage[most]{tcolorbox}
+\newtcolorbox{lbox}[2][] {
+    enhanced,
+    sharp corners,
+    colback=white,
+    colbacktitle=white,
+    coltitle=black,
+    boxed title style={colframe=white},
+    attach boxed title to top center={yshift=-3mm},
+    title=#2,#1
+}

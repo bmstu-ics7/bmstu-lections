@@ -1,0 +1,160 @@
+\section{Моделирования угроз и нарушителей}
+
+\textbf{Уязвимость} -- это свойство системы, допускающее или способствующее реализации угрозы.
+
+Цель моделирования угроз заставить разработчика конструктивно (на основе формального описания) мыслить при проектировании системы с точки зрения информационной безопасности.
+
+\subsection{Стандарт моделирвоания угроз}
+
+\begin{enumerate}
+    \item[\textbf{1 этап.}] Определение активов (что?)
+    \item[\textbf{2 этап.}] Описание архитектуры (где?)
+
+        \begin{itemize}
+            \item границы системы
+            \item функциональность
+            \item технологии
+        \end{itemize}
+
+    \item [\textbf{3 этап.}] Декомпозиция системы
+
+        \begin{itemize}
+            \item области защиты
+            \item политики безопасности
+        \end{itemize}
+
+    \item[\textbf{4 этап.}] Определение угроз
+
+        \begin{itemize}
+            \item природные источники
+            \item техногенные источники
+            \item антропогенные источники
+                \begin{itemize}
+                    \item случайные
+                    \item умышленные
+                \end{itemize}
+        \end{itemize}
+
+    \item[\textbf{5 этап.}] Документирование угроз
+
+        \begin{itemize}
+            \item цель угрозы
+            \item категория по STRIDE
+                \begin{itemize}
+                    \item spoofing (подлинность)
+                    \item tampering (целостность)
+                    \item repudation (потеря ответственности)
+                    \item information disclousure (нарушение конфиденциальности)
+                    \item denial of service (отказ доступа)
+                    \item elevation of privilege (поднятие полномочий)
+                \end{itemize}
+        \end{itemize}
+
+    \item[\textbf{6 этап.}] оценка / метод защиты
+
+        \begin{itemize}
+            \item DREAD
+
+                \begin{itemize}
+                    \item damage potential (что сломается)
+                    \item reproducibility (воспроизводимость)
+                    \item exploitability (используемость)
+                    \item affected users (пострадавшие пользователи)
+                    \item discoverability (возможность обнаружения)
+                \end{itemize}
+        \end{itemize}
+
+
+\end{enumerate}
+
+\subsection{Модель нарушителя}
+
+\begin{itemize}
+    \item низкий (может запускать разрешенные ему средства)
+    \item средний (могжет запускать собственные средства, которые он должен протащить)
+    \item высокий (может управлять системой)
+    \item абсолютный (создатель системы)
+\end{itemize}
+
+\begin{enumerate}
+    \item Увлеченные (мотивы: развлечение, слава, недооцененность на работе, доступ)
+    \item Профессионалы (мотив: деньги)
+\end{enumerate}
+
+\subsection{Модели доступа}
+
+\begin{itemize}
+    \item HRU (дискретный доступ)
+        \begin{table}[H]
+            \centering
+            \caption{Матрица доступа. Объект-субъект.}
+            \label{tab:label}
+            \begin{tabular}{|c|c|c|c|}
+                \hline
+                   & O1 & O2 & O3 \\
+                \hline
+                S1 & RW & & \\
+                \hline
+                S2 & & R & RWEX \\
+                \hline
+            \end{tabular}
+        \end{table}
+
+        \begin{table}[H]
+            \centering
+            \caption{Матрица доступа. Ролевая модель. Роли.}
+            \label{tab:label}
+            \begin{tabular}{|c|c|c|}
+                \hline
+                   & R1 & R2 \\
+                \hline
+                S1 & X & \\
+                \hline
+                S2 & X & X \\
+                \hline
+            \end{tabular}
+        \end{table}
+
+        \begin{table}[H]
+            \centering
+            \caption{Матрица доступа. Ролевая модель. Права ролей.}
+            \label{tab:label}
+            \begin{tabular}{|c|c|c|c|}
+                \hline
+                   & O1 & O2 & O3 \\
+                \hline
+                R1 & RW & & \\
+                \hline
+                R2 & & R & RWEX \\
+                \hline
+            \end{tabular}
+        \end{table}
+
+    \item Мандатная модель
+
+        \begin{itemize}
+            \item ССОВ -- совершенно секретно особой важности
+            \item СС -- совершенно секретно
+            \item С -- секретно
+            \item ДСП -- для служебного пользования
+        \end{itemize}
+
+        \begin{table}[H]
+            \centering
+            \caption{Матрица доступа}
+            \label{tab:label}
+            \begin{tabular}{|c|c|c|c|c|}
+                \hline
+                & ССОВ & СС & С & ДСП \\
+                \hline
+                ССОВ & $\blacksquare$ & $\blacksquare$ & $\blacksquare$ & $\blacksquare$ \\
+                \hline
+                СС & & $\blacksquare$ & $\blacksquare$ & $\blacksquare$ \\
+                \hline
+                С & & & $\blacksquare$ & $\blacksquare$ \\
+                \hline
+                ДСП & & & & $\blacksquare$ \\
+                \hline
+            \end{tabular}
+        \end{table}
+\end{itemize}
