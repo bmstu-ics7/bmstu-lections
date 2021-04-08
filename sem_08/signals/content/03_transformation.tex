@@ -1,0 +1,85 @@
+\section{Преобразование сигналов}
+
+\subsection{Спектральные преобразования}
+
+\subsubsection{Преобразование Фурье}
+
+\begin{equation*}
+    v(f) = \int_{-\infty}^{+\infty} u(t) e^{-2\pi i f t} dt
+\end{equation*}
+
+\begin{equation*}
+    u(t) = \int_{-\infty}^{+\infty} v(f) e^{2 \pi i f t} df
+\end{equation*}
+
+\textbf{Теорема о свертке}
+
+Имеются функции $u_1(t)$ и $u_2(t)$ тогда \textbf{сверткой} этих функций будет $w(t) = \int_{-\infty}^{+\infty} u_1(t')u_2(t-t')dt'$
+
+Фурье-образ свертки равен произведению фурье-образов свертываемых функций.
+
+\begin{equation*}
+    \overline{w}(f) = F(w(t))
+\end{equation*}
+
+$v_1(t)$ и $v_2(t)$ -- $F(u_1)$ и $F(u_2)$
+
+\begin{equation*}
+    \tilde w(f) = v_1(f) v_2(f)
+\end{equation*}
+
+\subsubsection{Преобразование Уолша}
+
+\textbf{Функция Уолша}
+
+\begin{equation*}
+    u_{\alpha} (z) = (-1)^{\sum_{k=1}^{n} \alpha_k z_k}
+\end{equation*}
+
+\begin{equation*}
+    0 \le z \le 1, z = \sum_{k=1}^n z_k 2^{-k}, z_k = 0,1
+\end{equation*}
+
+\begin{equation*}
+    \alpha=\sum_{k=1}^n \alpha_k 2^{k-1}
+\end{equation*}
+
+\subsection{Линейные фильтры}
+
+\begin{equation*}
+    u_{\text{вых}} = \underbrace{T}_{\text{линейный оператор}} u_{\text{вх}}(t)
+\end{equation*}
+
+Фильтр называется \textbf{линейным} если для него выполняется следующее условие
+
+\begin{equation*}
+    T(\alpha u_{\text{вх}_1} + \beta u_{\text{вх}_2}) = \alpha u_{\text{вых}_1} + \beta u_{\text{вых}_2}
+\end{equation*}
+
+\textbf{Преобразование инвариантное к сдвигу}
+
+\begin{equation*}
+    T(u_{\text{вх}}(t-\tau)) = u_\text{вых}(t-\tau)
+\end{equation*}
+
+\textbf{ЛИС-преобразования} (линейные преобразования инвариентные к сдвигу)
+
+\textbf{S-функция} (Дирак) была введена для описания точечных объектов.
+
+\begin{equation*}
+    \delta(x) =
+    \begin{cases}
+        +\infty, x = 0 \\
+        0, \text{ иначе} \\
+    \end{cases}
+\end{equation*}
+
+\begin{equation*}
+    \int_{-\infty}^{+\infty} \delta(x) dx = 1
+\end{equation*}
+
+\textbf{Фильтрующее свойство}
+
+\begin{equation*}
+    \int_{-\infty}^{+\infty} u(x) \delta(x-x_0) dx = u(x_0)
+\end{equation*}
